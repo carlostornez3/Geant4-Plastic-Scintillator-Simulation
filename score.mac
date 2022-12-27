@@ -1,0 +1,15 @@
+########################################
+#
+# define scoring mesh
+#
+/score/create/boxMesh boxMesh_1
+#
+/score/mesh/boxSize 15. 15. 15. cm
+/score/mesh/nBin 50 50 50
+#
+/score/quantity/nOfStep numberphotons
+
+#
+/score/close
+/run/beamOn 1
+/score/dumpQuantityToFile boxMesh_1 numberphotons nOfStepGamma.txt

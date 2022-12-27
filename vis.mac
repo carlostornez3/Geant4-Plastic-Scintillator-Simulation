@@ -1,0 +1,9 @@
+/run/initialize
+/vis/open OGL
+/vis/drawVolume
+/vis/viewer/set/viewpointVector 1 1 1
+/vis/scene/add/trajectories smooth
+/vis/scene/add/scale 5 cm
+/vis/scene/add/axes
+/vis/scene/add/eventID
+/vis/viewer/set/autoRefresh true

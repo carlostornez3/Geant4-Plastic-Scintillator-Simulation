@@ -1,0 +1,3 @@
+/run/numberOfThreads 6
+/run/initialize
+/run/beamOn 100
