@@ -19,10 +19,11 @@ void MyDetectorConstruction::DefineMaterials(){
     SCMat = nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
 
     G4int numberOfEntries=13;
-    std::vector<G4double> energy={1.239841939*eV/0.380,1.239841939*eV/0.390,1.239841939*eV/0.400,1.239841939*eV/0.408,1.239841939*eV/0.420,1.239841939*eV/0.430,1.239841939*eV/0.440,1.239841939*eV/0.450,1.239841939*eV/0.460,1.239841939*eV/0.470,1.239841939*eV/0.480,1.239841939*eV/0.490,1.239841939*eV/0.5};
+    std::vector<G4double> energy={1.239841939*eV/0.5,1.239841939*eV/0.490,1.239841939*eV/0.480,1.239841939*eV/0.470,1.239841939*eV/0.460,1.239841939*eV/0.450,1.239841939*eV/0.440,1.239841939*eV/0.430,1.239841939*eV/0.420,1.239841939*eV/0.408,1.239841939*eV/0.400,1.239841939*eV/0.390,1.239841939*eV/0.380};
     std::vector<G4double> rindexSC={1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,};
     std::vector<G4double> rindexWorld={1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
-    std::vector<G4double> fraction={0.05,0.25,0.88,1.,0.55,0.45,0.35,0.20,0.12,0.08,0.05,0.025,0.};
+    //std::vector<G4double> fraction={0.05,0.25,0.88,1.,0.55,0.45,0.35,0.20,0.12,0.08,0.05,0.025,0.};
+    std::vector<G4double> fraction={0.,0.025,0.05,0.08,0.12,0.2,0.35,0.45,0.55,1.,0.88,0.25,0.05};
     std::vector<G4double> abs={160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm};
 
     G4MaterialPropertiesTable *mptSC=new G4MaterialPropertiesTable();
@@ -31,7 +32,7 @@ void MyDetectorConstruction::DefineMaterials(){
     mptWorld->AddProperty("RINDEX",energy, rindexWorld,numberOfEntries);
     mptSC->AddProperty("SCINTILLATIONCOMPONENT1",energy,fraction,numberOfEntries);
     mptSC->AddConstProperty("SCINTILLATIONYIELD", 10./keV);
-    mptSC->AddConstProperty("RESOLUTIONSCALE", 1.);
+    mptSC->AddConstProperty("RESOLUTIONSCALE", 5.);
     mptSC->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 1.8*ns);
     mptSC->AddConstProperty("SCINTILLATIONRISETIME1", 0.7*ns);
     mptSC->AddProperty("ABSLENGTH",energy,abs,numberOfEntries);
