@@ -13,7 +13,7 @@ MyDetectorConstruction::MyDetectorConstruction(){
 MyDetectorConstruction::~MyDetectorConstruction(){}
 
 void MyDetectorConstruction::DefineMaterials(){
-    //G4OpticalParameters::Instance()->SetScintFiniteRiseTime(true);
+    G4OpticalParameters::Instance()->SetScintFiniteRiseTime(true);
     G4NistManager *nist = G4NistManager::Instance();
     worldMat = nist->FindOrBuildMaterial("G4_AIR");
     SCMat = nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
@@ -22,7 +22,6 @@ void MyDetectorConstruction::DefineMaterials(){
     std::vector<G4double> energy={1.239841939*eV/0.5,1.239841939*eV/0.490,1.239841939*eV/0.480,1.239841939*eV/0.470,1.239841939*eV/0.460,1.239841939*eV/0.450,1.239841939*eV/0.440,1.239841939*eV/0.430,1.239841939*eV/0.420,1.239841939*eV/0.408,1.239841939*eV/0.400,1.239841939*eV/0.390,1.239841939*eV/0.380};
     std::vector<G4double> rindexSC={1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,1.58,};
     std::vector<G4double> rindexWorld={1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
-    //std::vector<G4double> fraction={0.05,0.25,0.88,1.,0.55,0.45,0.35,0.20,0.12,0.08,0.05,0.025,0.};
     std::vector<G4double> fraction={0.,0.025,0.05,0.08,0.12,0.2,0.35,0.45,0.55,1.,0.88,0.25,0.05};
     std::vector<G4double> abs={160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm,160.*cm};
 
@@ -32,7 +31,7 @@ void MyDetectorConstruction::DefineMaterials(){
     mptWorld->AddProperty("RINDEX",energy, rindexWorld,numberOfEntries);
     mptSC->AddProperty("SCINTILLATIONCOMPONENT1",energy,fraction,numberOfEntries);
     mptSC->AddConstProperty("SCINTILLATIONYIELD", 10./keV);
-    mptSC->AddConstProperty("RESOLUTIONSCALE", 5.);
+    mptSC->AddConstProperty("RESOLUTIONSCALE", 1.);
     mptSC->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 1.8*ns);
     mptSC->AddConstProperty("SCINTILLATIONRISETIME1", 0.7*ns);
     mptSC->AddProperty("ABSLENGTH",energy,abs,numberOfEntries);
@@ -69,7 +68,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
     G4LogicalVolume *logicTest = new G4LogicalVolume(solidTest,SCMat, "logicSC");
     G4VPhysicalVolume *physTest =new G4PVPlacement(0,G4ThreeVector(0.,0.,0.),logicTest,"physTest",logicWorld,false,0,true);
     */
-    xtru = new G4ExtrudedSolid("xtru", polygon, 1.*cm, offsetA, scaleA, offsetB, scaleB);
+    xtru = new G4ExtrudedSolid("xtru", polygon, 0.25*cm, offsetA, scaleA, offsetB, scaleB);
     logicSC= new G4LogicalVolume(xtru,SCMat, "logicSC");
     physSC =new G4PVPlacement(0,G4ThreeVector(0.,0.,5.*cm),logicSC,"physSC",logicWorld,false,0,true);
 /*
@@ -80,6 +79,8 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
            physDetector=new G4PVPlacement(0,G4ThreeVector(-0.5*m+(i+0.5)*m/nRows,-0.5*m+(j+0.5)*m/nCols,0.49*m),logicDetector,"physDetector",logicWorld,false,j+i*nCols,true);
         }
     }*/
+    fScoringVolume=logicSC;
+
     G4Box *solidDetectorZ = new G4Box("solidDetectorZ",0.5*m,0.5*m,0.01*m);
     logicDetectorZ = new G4LogicalVolume(solidDetectorZ,worldMat,"logicalDetectorZ");
     G4VPhysicalVolume *physDetector1=new G4PVPlacement(0,G4ThreeVector(0.,0.,0.49*m),logicDetectorZ,"physDetector1",logicWorld,false,1,true);

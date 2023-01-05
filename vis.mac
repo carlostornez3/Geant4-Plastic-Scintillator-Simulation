@@ -7,3 +7,4 @@
 /vis/scene/add/axes
 /vis/scene/add/eventID
 /vis/viewer/set/autoRefresh true
+/process/optical/scintillation/setFiniteRiseTime true

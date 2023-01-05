@@ -1,0 +1,3 @@
+/run/initialize
+/process/optical/scintillation/setFiniteRiseTime true
+/run/beamOn 10

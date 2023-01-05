@@ -12,7 +12,7 @@ MyRunAction::MyRunAction(){
     man->FinishNtuple(0);
 
     man->CreateNtuple("Scoring","Scoring");
-    man->CreateNtupleIColumn("fEdep");
+    man->CreateNtupleDColumn("fEdep");
     man->FinishNtuple(1);
 
 }
