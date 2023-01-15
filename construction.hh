@@ -18,8 +18,8 @@
 #include "G4TessellatedSolid.hh"
 #include "G4OpticalPhysics.hh"
 #include "detector.hh"
-#include "G4GenericMessenger.hh"
-// #include "G4Sphere.hh"
+
+
 class MyDetectorConstruction : public G4VUserDetectorConstruction
 {
 public:
@@ -38,7 +38,7 @@ private:
     G4int nCols,nRows;
     virtual void ConstructSDandField();
     
-    G4GenericMessenger *fMessenger;
+    
     
     G4Box *solidWorld,*solidDetector;
     G4LogicalVolume *logicWorld,*logicSC;

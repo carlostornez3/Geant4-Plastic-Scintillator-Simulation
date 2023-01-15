@@ -12,6 +12,7 @@ MyEventAction(MyRunAction*);
 
     virtual void BeginOfEventAction(const G4Event*);
     virtual void EndOfEventAction(const G4Event*);
+    //Creation of a method that acumulates the energy deposition.
     void AddEdep(G4double edep){fEdep +=edep;}
 private:
 G4double fEdep;

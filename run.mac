@@ -1,3 +1,5 @@
+
+##This macro must be used only while using G4MULTITHREADED##
 /run/numberOfThreads 6
 /run/initialize
 

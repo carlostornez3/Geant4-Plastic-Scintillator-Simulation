@@ -16,7 +16,7 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         return;
     }
     
-
+    //Acumulates the energy in the step using the method created in event.hh
     G4double edep = step->GetTotalEnergyDeposit();
     fEventAction->AddEdep(edep);
 }

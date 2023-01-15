@@ -9,11 +9,10 @@ fEdep=0;
 }
 void MyEventAction::EndOfEventAction(const G4Event*){
     
- 
+    
     G4cout<<"Energy deposition: "<<G4BestUnit(fEdep,"Energy")<<G4endl;
     
-    
+    //Passes the energy Deposition  to a histogram 
     G4AnalysisManager *man=G4AnalysisManager::Instance();
-    man->FillNtupleDColumn(1,0,fEdep);
-    man->AddNtupleRow(1);
+    man->FillH1(0,fEdep);
 }

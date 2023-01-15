@@ -1,3 +1,4 @@
+##This Macro must be used only when G4MULTITHREADED is NOT used.##
 /run/initialize
-/process/optical/scintillation/setFiniteRiseTime true
+
 /run/beamOn 10

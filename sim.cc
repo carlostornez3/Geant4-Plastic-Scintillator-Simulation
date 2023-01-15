@@ -19,14 +19,10 @@ int main(int argc,char** argv){
         G4RunManager *runManager=new G4RunManager();
     #endif
     
-    
-    //G4RunManager *runManager=new G4RunManager();
-    //G4ScoringManager::GetScoringManager();
    
     runManager->SetUserInitialization(new MyDetectorConstruction());
     runManager->SetUserInitialization(new MyPhysicsList());
     runManager->SetUserInitialization(new MyActionInitialization());
-    //runManager->Initialize();
    
     if(argc==1){
         ui = new G4UIExecutive(argc,argv);

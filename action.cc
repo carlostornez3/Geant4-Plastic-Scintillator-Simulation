@@ -13,6 +13,7 @@ void MyActionInitialization::BuildForMaster() const {
 }
 void MyActionInitialization::Build() const 
 {
+    //User-defined action classes declarated acording to geant4 sintaxis
     MyPrimaryGenerator *generator = new MyPrimaryGenerator();
     SetUserAction(generator);
     MyRunAction *runAction= new MyRunAction();

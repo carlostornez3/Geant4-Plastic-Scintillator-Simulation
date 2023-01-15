@@ -4,6 +4,7 @@
 #include "G4UserRunAction.hh"
 #include "G4AnalysisManager.hh"
 #include "G4Run.hh"
+#include "G4SystemOfUnits.hh"
 class MyRunAction:public G4UserRunAction{
 public:
     MyRunAction();
