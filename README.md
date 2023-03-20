@@ -1,7 +1,7 @@
 # Geant4-Plastic-Scintillator-Simulation
 
 
-This project simulates an Hexagonal Plastic Scintillator and computes the total energy deposition by muons. It also creates a root file with information about 
+This project simulates a rectangular Plastic Scintillator and computes the total energy deposition by muons. It also creates a root file with information about 
 the photons generated via scintillation and the energy deposition.
 
 The program uses the method GetTotalEnergyDeposit() to calculate the energy deposition by muons. 
