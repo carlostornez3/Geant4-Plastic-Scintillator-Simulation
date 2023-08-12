@@ -8,15 +8,24 @@ The program uses the method GetTotalEnergyDeposit() to calculate the energy depo
 
 To run the program:
 cd Geant4-Plastic-Scintillator-Simulation
+
+
 mkdir build
+
 cd build
+
 cmake ..
+
 make 
 
 The program allows to choose between two geometries and two scintillator types: Hexagonal(H) or Rectangular(R) and BC404 or EJ208. It also allows you to choose the thickness (it must be specified in mm)
+
 To execute:
-./sim <Geometry> <type> <thickness>
+
+./sim \<Geometry> \<type> \<thickness>
+
 Example:
+
 ./sim R BC4O4 20 run.mac
 
 The last parameter is optional and it will execute the batch mode. 
