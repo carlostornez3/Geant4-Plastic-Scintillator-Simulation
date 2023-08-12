@@ -1,6 +1,6 @@
 
 ##This macro must be used only while using G4MULTITHREADED##
-/run/numberOfThreads 6
+/run/numberOfThreads 4
 /run/initialize
 
-/run/beamOn 100
+/run/beamOn 1000
