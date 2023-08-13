@@ -29,11 +29,12 @@ public:
     MyDetectorConstruction();
     ~MyDetectorConstruction();
     G4LogicalVolume *GetScoringVolume() const{return fScoringVolume;}
-    void ScintillatorProperties(G4String type,G4String geometry,G4int thickness);
+    void ScintillatorProperties(G4String type,G4String geometry,G4int thickness, G4String numberOfSensors);
     virtual G4VPhysicalVolume *Construct();
     static G4String scintillatorType;
     static G4String scintillatorGeometry;
     static G4int scintillatorThickness;
+    static G4String scintillatorNumberOfSensors;
     G4double wavelength, lightOutput;
     void hexagonalGeometry();
     void rectangularGeometry();
@@ -51,9 +52,9 @@ private:
     
     G4Box *solidWorld,*solidDetector, *innerBox,*externalBox,*sensorBox,*solidDetector2;
     G4LogicalVolume *logicWorld,*logicSC, *logicMylar;
-    G4VPhysicalVolume *physWorld,*physSC,*physDetector,*physMylar;
+    G4VPhysicalVolume *physWorld,*physSC,*physDetector1,*physDetector2,*physDetector,*physMylar;
     G4VSolid* xtru, *xtruExternal, *xtruInner;
-    G4SubtractionSolid  *externalInner, *externalSensor;
+    G4SubtractionSolid  *externalInner, *externalSensor1, *externalSensor2,*externalSensor;
 
     G4RotationMatrix* yRot = new G4RotationMatrix;
 

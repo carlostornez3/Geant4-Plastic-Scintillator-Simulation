@@ -21,13 +21,13 @@ int main(int argc,char** argv){
     #endif
     MyDetectorConstruction scintillatorProperties;
     G4int thickness = G4UIcommand::ConvertToInt(argv[3]);
-    scintillatorProperties.ScintillatorProperties(argv[1],argv[2],thickness); 
+    scintillatorProperties.ScintillatorProperties(argv[1],argv[2],thickness,argv[4]); 
    
     runManager->SetUserInitialization(new MyDetectorConstruction());
     runManager->SetUserInitialization(new MyPhysicsList());
     runManager->SetUserInitialization(new MyActionInitialization());
    
-    if(argc==4){
+    if(argc==5){
         ui = new G4UIExecutive(argc,argv);
         
     }
@@ -41,7 +41,7 @@ int main(int argc,char** argv){
     ui->SessionStart();
     }else{
         G4String command="/control/execute ";
-        G4String fileName = argv[4];
+        G4String fileName = argv[5];
         UImanager->ApplyCommand(command+fileName);
         delete ui;
     }

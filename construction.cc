@@ -2,6 +2,7 @@
 #include <iostream>
 G4String MyDetectorConstruction::scintillatorType;
 G4String MyDetectorConstruction::scintillatorGeometry;
+G4String MyDetectorConstruction::scintillatorNumberOfSensors;
 G4int MyDetectorConstruction::scintillatorThickness;
 MyDetectorConstruction::MyDetectorConstruction(){
     if(scintillatorType=="EJ208"){
@@ -183,38 +184,73 @@ void MyDetectorConstruction::ConstructSDandField(){
 
     
 }
-void MyDetectorConstruction::ScintillatorProperties(G4String type,G4String geometry,G4int thickness){
+void MyDetectorConstruction::ScintillatorProperties(G4String type,G4String geometry,G4int thickness,G4String numberOfSensors){
     scintillatorType=type;
     scintillatorGeometry=geometry;
     scintillatorThickness = thickness;
+    scintillatorNumberOfSensors=numberOfSensors;
 
 }
 void MyDetectorConstruction::rectangularGeometry(){
-    G4TwoVector offsetA(0,0), offsetB(0,0);
-    G4double scaleA = 1, scaleB = 1;
-    
-    
-    
-    G4ThreeVector zTrans(0,0,thickness/2);
-    yRot->rotateY(0*rad);
-    innerBox = new G4Box("innerBox",2.5*cm,50.*cm,thickness/2);
-    externalBox = new G4Box("externalBox",2.6*cm,50.1*cm,(thickness/2)+1*mm);
-    sensorBox = new G4Box("sensorBox",3.*mm,3.*mm,1*mm);
 
-    externalInner= new G4SubtractionSolid("External-Inner", externalBox, innerBox);
-    externalSensor=new G4SubtractionSolid("external-sensor", externalInner, sensorBox, yRot, zTrans);
-    logicMylar= new G4LogicalVolume(externalSensor,mylarMat, "logicMylar");
-    G4LogicalSkinSurface *skin = new G4LogicalSkinSurface("skin",logicMylar,mirrorSurface);
-    physMylar =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicMylar,"physMylar",logicWorld,false,1,true);
 
-    solidDetector=new G4Box("solidDetector",3.*mm,3.*mm,1.0*mm);
-    logicDetector = new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-    G4VPhysicalVolume *physDetector=new G4PVPlacement(0,G4ThreeVector(0.,0.,101*mm+thickness/2),logicDetector,"physDetector",logicWorld,false,3,true);
-   
+    if(scintillatorNumberOfSensors=="1"){
+        G4TwoVector offsetA(0,0), offsetB(0,0);
+        G4double scaleA = 1, scaleB = 1;
+        
+        
+        
+        G4ThreeVector zTrans(0,0,thickness/2);
+        yRot->rotateY(0*rad);
+        innerBox = new G4Box("innerBox",2.5*cm,50.*cm,thickness/2);
+        externalBox = new G4Box("externalBox",2.6*cm,50.1*cm,(thickness/2)+1*mm);
+        sensorBox = new G4Box("sensorBox",3.*mm,3.*mm,1*mm);
 
-    G4Box *solidScintillator = new G4Box("solidScintillator",2.5*cm,50.*cm,thickness/2);
-    logicSC= new G4LogicalVolume(solidScintillator,SCMat, "logicSC");
-    physSC =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicSC,"physSC",logicWorld,false,2,true);
+        externalInner= new G4SubtractionSolid("External-Inner", externalBox, innerBox);
+        externalSensor=new G4SubtractionSolid("external-sensor", externalInner, sensorBox, yRot, zTrans);
+        logicMylar= new G4LogicalVolume(externalSensor,mylarMat, "logicMylar");
+        G4LogicalSkinSurface *skin = new G4LogicalSkinSurface("skin",logicMylar,mirrorSurface);
+        physMylar =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicMylar,"physMylar",logicWorld,false,1,true);
+
+        solidDetector=new G4Box("solidDetector",3.*mm,3.*mm,1.0*mm);
+        logicDetector = new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
+        G4VPhysicalVolume *physDetector=new G4PVPlacement(0,G4ThreeVector(0.,0.,101*mm+thickness/2),logicDetector,"physDetector",logicWorld,false,3,true);
+    
+
+        G4Box *solidScintillator = new G4Box("solidScintillator",2.5*cm,50.*cm,thickness/2);
+        logicSC= new G4LogicalVolume(solidScintillator,SCMat, "logicSC");
+        physSC =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicSC,"physSC",logicWorld,false,2,true);
+    }
+
+    if(scintillatorNumberOfSensors=="2"){
+        G4TwoVector offsetA(0,0), offsetB(0,0);
+        G4double scaleA = 1, scaleB = 1;
+        
+        
+        
+        G4ThreeVector yTrans1(0,50.*cm,0);
+        G4ThreeVector yTrans2(0,-50.*cm,0);
+        yRot->rotateY(0*rad);
+        innerBox = new G4Box("innerBox",2.5*cm,50.*cm,thickness/2);
+        externalBox = new G4Box("externalBox",2.6*cm,50.1*cm,(thickness/2)+1*mm);
+        sensorBox = new G4Box("sensorBox",3.*mm,1.*mm,3*mm);
+
+        externalInner= new G4SubtractionSolid("External-Inner", externalBox, innerBox);
+        externalSensor1=new G4SubtractionSolid("External-Inner-Sensor1", externalInner, sensorBox, yRot, yTrans1);
+        externalSensor2=new G4SubtractionSolid("External-Inner-Sensor2", externalSensor2, sensorBox, yRot, yTrans2);
+        logicMylar= new G4LogicalVolume(externalSensor2,mylarMat, "logicMylar");
+        G4LogicalSkinSurface *skin = new G4LogicalSkinSurface("skin",logicMylar,mirrorSurface);
+        physMylar =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicMylar,"physMylar",logicWorld,false,1,true);
+
+        solidDetector=new G4Box("solidDetector",3.*mm,1.*mm,3.0*mm);
+        logicDetector = new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
+        physDetector1=new G4PVPlacement(0,G4ThreeVector(0.,50*cm,10*cm),logicDetector,"physDetector1",logicWorld,false,3,true);
+        physDetector2=new G4PVPlacement(0,G4ThreeVector(0.,-50*cm,10*cm),logicDetector,"physDetector2",logicWorld,false,4,true);
+
+        G4Box *solidScintillator = new G4Box("solidScintillator",2.5*cm,50.*cm,thickness/2);
+        logicSC= new G4LogicalVolume(solidScintillator,SCMat, "logicSC");
+        physSC =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicSC,"physSC",logicWorld,false,2,true);
+    }
 
 }
 
