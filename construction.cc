@@ -245,7 +245,7 @@ void MyDetectorConstruction::rectangularGeometry(){
         solidDetector=new G4Box("solidDetector",3.*mm,1.*mm,3.0*mm);
         logicDetector = new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
         physDetector1=new G4PVPlacement(0,G4ThreeVector(0.,50*cm+1*mm,10*cm),logicDetector,"physDetector1",logicWorld,false,3,true);
-        physDetector2=new G4PVPlacement(0,G4ThreeVector(0.,-50*cm+1*mm,10*cm),logicDetector,"physDetector2",logicWorld,false,4,true);
+        physDetector2=new G4PVPlacement(0,G4ThreeVector(0.,-50*cm-1*mm,10*cm),logicDetector,"physDetector2",logicWorld,false,4,true);
 
         G4Box *solidScintillator = new G4Box("solidScintillator",2.5*cm,50.*cm,thickness/2);
         logicSC= new G4LogicalVolume(solidScintillator,SCMat, "logicSC");
