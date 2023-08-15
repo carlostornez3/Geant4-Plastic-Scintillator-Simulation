@@ -237,7 +237,7 @@ void MyDetectorConstruction::rectangularGeometry(){
 
         externalInner= new G4SubtractionSolid("External-Inner", externalBox, innerBox);
         externalSensor1=new G4SubtractionSolid("External-Inner-Sensor1", externalInner, sensorBox, yRot, yTrans1);
-        externalSensor2=new G4SubtractionSolid("External-Inner-Sensor2", externalSensor2, sensorBox, yRot, yTrans2);
+        externalSensor2=new G4SubtractionSolid("External-Inner-Sensor2", externalSensor1, sensorBox, yRot, yTrans2);
         logicMylar= new G4LogicalVolume(externalSensor2,mylarMat, "logicMylar");
         G4LogicalSkinSurface *skin = new G4LogicalSkinSurface("skin",logicMylar,mirrorSurface);
         physMylar =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicMylar,"physMylar",logicWorld,false,1,true);

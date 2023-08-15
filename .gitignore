@@ -7,4 +7,5 @@ key
 score.mac
 oldb/
 .vscode/
+build/
 
