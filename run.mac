@@ -1,6 +1,6 @@
 
 ##This macro must be used only while using G4MULTITHREADED##
-/run/numberOfThreads 4
+/run/numberOfThreads 6
 /run/initialize
-
+/process/optical/scintillation/setFiniteRiseTime true
 /run/beamOn 1000

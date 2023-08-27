@@ -29,43 +29,43 @@ MyRunAction::MyRunAction(){
    man->SetH1XAxisTitle(4,"Event");
    man->SetH1YAxisTitle(4,"Number of Photons");
 
-   man->CreateH1("fTime0","Time of flight Event 0",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime0","Time of flight Event 0",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(5,"Time of flight (ns)");
    man->SetH1YAxisTitle(5,"Number of Photons");
 
-    man->CreateH1("fTime1","Time of flight Event 1",150,0.*ns,70.*ns,"ns");
+    man->CreateH1("fTime1","Time of flight Event 1",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(6,"Time of flight (ns)");
    man->SetH1YAxisTitle(6,"Number of Photons");
    
-   man->CreateH1("fTime2","Time of flight Event 2",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime2","Time of flight Event 2",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(7,"Time of flight (ns)");
    man->SetH1YAxisTitle(7,"Number of Photons");
 
-   man->CreateH1("fTime3","Time of flight Event 3",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime3","Time of flight Event 3",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(8,"Time of flight (ns)");
    man->SetH1YAxisTitle(8,"Number of Photons");
 
-   man->CreateH1("fTime4","Time of flight Event 4",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime4","Time of flight Event 4",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(9,"Time of flight (ns)");
    man->SetH1YAxisTitle(9,"Number of Photons");
 
-   man->CreateH1("fTime5","Time of flight Event 5",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime5","Time of flight Event 5",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(10,"Time of flight (ns)");
    man->SetH1YAxisTitle(10,"Number of Photons");
 
-   man->CreateH1("fTime6","Time of flight Event 6",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime6","Time of flight Event 6",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(11,"Time of flight (ns)");
    man->SetH1YAxisTitle(11,"Number of Photons");
 
-   man->CreateH1("fTime7","Time of flight Event 7",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime7","Time of flight Event 7",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(12,"Time of flight (ns)");
    man->SetH1YAxisTitle(12,"Number of Photons");
 
-   man->CreateH1("fTime8","Time of flight Event 8",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime8","Time of flight Event 8",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(13,"Time of flight (ns)");
    man->SetH1YAxisTitle(13,"Number of Photons");
 
-   man->CreateH1("fTime9","Time of flight Event 9",150,0.*ns,70.*ns,"ns");
+   man->CreateH1("fTime9","Time of flight Event 9",150,0.*ns,120.*ns,"ns");
    man->SetH1XAxisTitle(14,"Time of flight (ns)");
    man->SetH1YAxisTitle(14,"Number of Photons");
     
@@ -73,8 +73,52 @@ MyRunAction::MyRunAction(){
    man->SetH1XAxisTitle(15,"Time of flight (ns)");
    man->SetH1YAxisTitle(15,"Number of Photons");
    man->SetH1Activation(15, false);
-
-   man->CreateH1("MTOF","Mean Time of flight",60,0*ns,12*ns,"ns");
+    G4int lowLimit, highLimit,center;
+    if(MyDetectorConstruction::scintillatorGeometry=="R"){
+        if(MyDetectorConstruction::scintillatorType=="BC404"){
+            if(MyDetectorConstruction::scintillatorThickness==10){
+                center=9*ns;
+            }
+            else if(MyDetectorConstruction::scintillatorThickness==20){
+                center=10*ns;
+            }
+            else if(MyDetectorConstruction::scintillatorThickness==30){
+                center=10*ns;
+            }
+            else if(MyDetectorConstruction::scintillatorThickness==40){
+                center=10*ns;
+            }else{
+                center=0;
+            }
+        }if(MyDetectorConstruction::scintillatorType=="EJ208"){
+            if(MyDetectorConstruction::scintillatorThickness==10){
+                center=19*ns;
+            }
+            else if(MyDetectorConstruction::scintillatorThickness==20){
+                center=20*ns;
+            }
+            else if(MyDetectorConstruction::scintillatorThickness==30){
+                center=21*ns;
+            }
+            else if(MyDetectorConstruction::scintillatorThickness==40){
+                center=22*ns;
+            }else{
+                center=0;
+            }
+        }
+        if(center!=0){
+        lowLimit=center-3*ns;
+        highLimit=center+3*ns;
+        } else{
+        lowLimit=0*ns;
+        highLimit=100*ns;
+        }
+    }else{
+        lowLimit=0*ns;
+        highLimit=20*ns;
+    }
+    
+   man->CreateH1("MTOF","Mean Time of flight",60,lowLimit,highLimit,"ns");
    man->SetH1XAxisTitle(16,"Time of flight (ns)");
    //man->SetH1YAxisTitle(16,"Number of Photons");
 
@@ -110,7 +154,7 @@ void MyRunAction::BeginOfRunAction(const G4Run * run){
     std::stringstream strRunID;
     strRunID<<runID;
    // G4String thickness = G4UIcommand::ConvertToString(MyDetectorConstruction::scintillatorThickness); strRunID.str()
-    G4String file =MyDetectorConstruction::scintillatorGeometry+"_"+ MyDetectorConstruction::scintillatorType +"_" + G4UIcommand::ConvertToString(MyDetectorConstruction::scintillatorThickness) + "mm"  + ".root";
+    G4String file =MyDetectorConstruction::scintillatorGeometry+"_"+ MyDetectorConstruction::scintillatorType +"_" + G4UIcommand::ConvertToString(MyDetectorConstruction::scintillatorThickness) + "mm"+"_"+MyDetectorConstruction::scintillatorNumberOfSensors+"Sensors"  + ".root";
   
     man->OpenFile(file);
 

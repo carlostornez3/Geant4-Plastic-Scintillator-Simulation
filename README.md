@@ -22,13 +22,15 @@ The program allows to choose between two geometries and two scintillator types: 
 
 To execute:
 
-./sim \<Geometry> \<type> \<thickness>
+./sim \<type> \<Geometry> \<thickness> \<numberOfSensors>
 
 Example:
 
-./sim R BC4O4 20 run.mac
+./sim BC4O4 R 20 2 run.mac
 
 The last parameter is optional and it will execute the batch mode. 
+
+Two-sensors simulation is not available for hexagonal geometry.
 
 If you are using multithreaded mode, modify the "run.mac" file, there, you can change the number of threads your computer can use and also the number of 
 events geant4 will simulate(1 muon per event).Beware that visualization is only available if you are not using multithreaded.
