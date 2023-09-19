@@ -22,6 +22,7 @@
 #include "G4OpticalSurface.hh"
 #include "G4LogicalSkinSurface.hh"
 #include "G4String.hh"
+#include <tuple>
 
 class MyDetectorConstruction : public G4VUserDetectorConstruction
 {
@@ -29,38 +30,59 @@ public:
     MyDetectorConstruction();
     ~MyDetectorConstruction();
     G4LogicalVolume *GetScoringVolume() const{return fScoringVolume;}
-    void ScintillatorProperties(G4String type,G4String geometry,G4int thickness, G4String numberOfSensors);
+    void rectangularPhysicalVolume(G4double length, G4double width, G4double thickness,G4double sensorLength, G4double Xcoordinate, G4double Ycoordinate, G4double Zcoordinate,G4Material *material, G4VPhysicalVolume *physicalVolume, G4LogicalVolume *logicalDetector, G4String nombre);
+    void ScintillatorProperties(G4String type,G4String geometry,G4int thickness, G4String numberOfSensors, G4String arrangement);
     virtual G4VPhysicalVolume *Construct();
     static G4String scintillatorType;
     static G4String scintillatorGeometry;
     static G4int scintillatorThickness;
+    static G4int copyNumberSC;
     static G4String scintillatorNumberOfSensors;
+    static G4String scintillatorArrangement;
+   
     G4double wavelength, lightOutput;
     void hexagonalGeometry();
     void rectangularGeometry();
 
 private: 
     G4LogicalVolume *logicDetector;
+   
+
     G4LogicalVolume *logicDetectorZ;
     G4LogicalVolume *logicDetectorX;
     G4LogicalVolume *logicDetectorY;
     G4LogicalVolume *fScoringVolume;
     G4double thickness;
     G4int nCols,nRows;
+
+    G4LogicalVolume *logicDetectorX1 ;
+        G4LogicalVolume *logicDetectorY1;
+        G4LogicalVolume *logicDetectorBC;
+        G4LogicalVolume *logicDetectorCZ;
+        G4LogicalVolume *logicDetectorFerm;
+        G4LogicalVolume *logicDetectorEJS0;
+        G4LogicalVolume *logicDetectorEJS1;
+        G4LogicalVolume *logicDetectorEJS2;
+        G4LogicalVolume *logicDetectorAcorde;
+        G4LogicalVolume *logicDetectorUnamEJ;
+        G4LogicalVolume *logicDetectorX2;
     virtual void ConstructSDandField();
     
     
     G4Box *solidWorld,*solidDetector, *innerBox,*externalBox,*sensorBox,*solidDetector2;
     G4LogicalVolume *logicWorld,*logicSC, *logicMylar;
-    G4VPhysicalVolume *physWorld,*physSC,*physDetector1,*physDetector2,*physDetector,*physMylar;
+    G4VPhysicalVolume *physWorld,*physSC,*physDetectorX1,*physDetectorX2,*physDetector,*physMylar,*physDetectorY1,*physDetectorY2,*physDetector1,*physDetector2, *upperDetector, *lowerDetector;
     G4VSolid* xtru, *xtruExternal, *xtruInner;
     G4SubtractionSolid  *externalInner, *externalSensor1, *externalSensor2,*externalSensor;
 
+    G4VPhysicalVolume *physX1,*physY1, *physBC, *physCZ, *physFerm, *physEJS1, *physEJS2, *physEJS0, *physAcorde, *physUnamEJ, *physX2;
+
     G4RotationMatrix* yRot = new G4RotationMatrix;
 
-    G4Material *worldMat,*SCMat, *mylarMat,*air;
+    G4Material *worldMat,*SCMat, *mylarMat,*air,*BCMat, *EJMat;
     G4OpticalSurface *mirrorSurface;
     void DefineMaterialsBC();
     void DefineMaterialsEJ();
+    void DefineAllScintillatorsMaterial();
 };
 #endif

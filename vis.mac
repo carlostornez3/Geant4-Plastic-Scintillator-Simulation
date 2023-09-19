@@ -1,78 +1,15 @@
 /run/initialize
-#/vis/open OGL 600x600-0+0
+/vis/open OGL
 
-#/vis/drawVolume
+/vis/drawVolume
 #/vis/geometry/set/visibility logicWorld 0 false
-#/vis/viewer/set/viewpointVector 1 1 1
-#/vis/scene/add/trajectories smooth
-#/vis/scene/add/scale 5 cm
-#/vis/scene/add/axes
-#/vis/scene/add/eventID
-#/vis/viewer/set/autoRefresh true
+/vis/viewer/set/viewpointVector 1 1 1
+/vis/scene/add/trajectories smooth
+/vis/scene/add/scale 5 cm
+/vis/scene/add/axes
+/vis/scene/add/eventID
+/vis/viewer/set/autoRefresh true
 #/vis/verbose warnings
 #/tracking/storeTrajectory 0
-#/process/optical/scintillation/setFiniteRiseTime true
-/vis/open OGL 600x600-0+0
-/vis/viewer/set/autoRefresh false
-/vis/verbose errors
-/vis/drawVolume
+/process/optical/scintillation/setFiniteRiseTime true
 
-/vis/viewer/set/viewpointVector -1 0 0
-/vis/viewer/set/lightsVector -1 0 0
-
-/vis/viewer/set/style wireframe
-/vis/viewer/set/auxiliaryEdge true
-/vis/viewer/set/lineSegmentsPerCircle 100
-/vis/scene/add/trajectories smooth
-/vis/modeling/trajectories/create/drawByCharge
-/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
-/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 2
-
-
-#
-# Decorations
-# Name
-/vis/set/textColour green
-/vis/set/textLayout right
-#/vis/scene/add/text2D 0.9 -.9 24 ! ! exampleB1
-# or, if your system does not support right-adjustment
-#/vis/scene/add/text2D 0 -.9 24 ! ! exampleB1
-/vis/set/textLayout    # Revert to normal (left adjusted) layout
-/vis/set/textColour    # Revert to default text colour (blue)
-#
-# Axes, scale, etc.
-/vis/scene/add/scale   # Simple scale line
-/vis/scene/add/axes    # Simple axes: x=red, y=green, z=blue.
-/vis/scene/add/eventID # Drawn at end of event
-#/vis/scene/add/date    # Date stamp
-#/vis/scene/add/logo2D  # Simple logo
-#/vis/scene/add/logo    # 3D logo
-#
-# Frame
-/vis/set/colour black
-/vis/set/lineWidth 2
-/vis/scene/add/frame   # Simple frame around the view
-/vis/set/colour white        # Revert to default colour (white)
-/vis/set/lineWidth     # Revert to default line width (1.)
-#
-# Attach text to one edge of Shape1, with a small, fixed offset
-#/vis/scene/add/text 0 6 -4 cm 18 4 4 Shape1
-# Attach text to one corner of Shape2, with a small, fixed offset
-#/vis/scene/add/text 6 7 10 cm 18 4 4 Shape2
-#
-# To get nice view
-# Make the "World" box invisible
-/vis/geometry/set/visibility logicWorld 0 false
-#/vis/geometry/set/alpha World 0.95 physSC
-# "Envelope" is transparent blue to represent water
-#/vis/geometry/set/colour Envelope 0 0 0 1 .3
-/vis/viewer/set/style surface
-/vis/viewer/set/hiddenMarker true
-/vis/viewer/set/viewpointThetaPhi 120 150
-#
-# Re-establish auto refreshing and verbosity:
-/vis/viewer/set/autoRefresh true
-/vis/verbose warnings
-#
-# For file-based drivers, use this to create an empty detector view:
-#/vis/viewer/flush

@@ -1,6 +1,6 @@
 #include "detector.hh"
 #include "G4UnitsTable.hh"
-
+#include <cmath>
 MySensitiveDetector::MySensitiveDetector(G4String name):G4VSensitiveDetector(name)
 {   
  
@@ -17,6 +17,20 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
     G4StepPoint *preStepPoint=aStep->GetPreStepPoint();
     G4StepPoint *postStepPoint=aStep->GetPostStepPoint();
     G4ThreeVector posPhoton=preStepPoint->GetPosition();
+    G4double posmodule, posmodule2;
+if (track) {
+        const G4ParticleDefinition* particleDefinition = track->GetDefinition();
+        if (particleDefinition) {
+            G4String particleName = particleDefinition->GetParticleName();
+            //G4cout << "Nombre de la partícula: " << particleName << G4endl;
+            if(particleName == "proton"){
+            posmodule = posPhoton.x()*posPhoton.x()+posPhoton.y()*posPhoton.y();
+            posmodule2=std::sqrt(posmodule2);
+             G4cout<<posPhoton<<" "<<posmodule2<<G4endl;
+            }
+        }
+    }
+    
     G4ThreeVector momPhoton=preStepPoint->GetMomentum();
     G4double energy =momPhoton.mag();
     G4double wlen= ((1.239841939*eV*um)/momPhoton.mag());
