@@ -6,10 +6,12 @@
  //Creation of histograms
  //#include "G4RootAnalysisManager.hh"
  G4int MyRunAction::noc;
+G4int MyRunAction::noc2;
+
 MyRunAction::MyRunAction(){
    G4AnalysisManager *man =G4AnalysisManager::Instance();
 
-   if(scintillatorArrangement=="SC"){
+   if(MyDetectorConstruction::scintillatorArrangement=="SC"){
   
         man->CreateH1("fEdep","Energy Deposition by Muons",60,0.,12*MeV,"MeV");
         man->SetH1XAxisTitle(0,"Energy Deposition (MeV)");
@@ -144,8 +146,21 @@ MyRunAction::MyRunAction(){
         man->SetH2XAxisTitle(0,"Photon Energy (eV)");
         man->SetH2YAxisTitle(0,"Photon Wavelength (nm)");
         man->SetH2ZAxisTitle(0,"Number of Photons");
-   } else if(scintillatorArrangement=="SCBT"){
+   } else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"){
         noc=0;
+        noc2=0;
+        G4int fevents=10;
+        histogramCreation("X1","BC",12.,fevents,0*ns,12*ns);
+        histogramCreation("Y1","BC",12.,fevents,0*ns,12*ns);
+        histogramCreation("CZ","EJ208",12.,fevents,0*ns,12*ns);
+        histogramCreation("S0","EJ208",12.,fevents,0*ns,12*ns);
+        histogramCreation("S1","EJ208",12.,fevents,0*ns,12*ns);
+        histogramCreation("S2","EJ208",12.,fevents,0*ns,12*ns);
+        histogramCreation("BC","BC",12.,fevents,0*ns,12*ns);
+        histogramCreation("ACORDE","EJ208",12.,fevents,0*ns,12*ns);
+        histogramCreation("UNAM","EJ208",12.,fevents,0*ns,12*ns);
+        histogramCreation("FERM","EJ208",12.,fevents,0*ns,12*ns);
+        histogramCreation("X2","BC",12.,fevents,0*ns,12*ns);
    }
 
 }
@@ -172,7 +187,7 @@ void MyRunAction::EndOfRunAction(const G4Run *){
 }
 
 void MyRunAction::histogramCreation(G4String scintillatorName,G4String scintillatorType, G4double thickness, G4int numberOfEvents, G4double mtofLL, G4double mtofUL){
-        
+        G4AnalysisManager *man =G4AnalysisManager::Instance();
         treeName = "fEdep_"+ scintillatorName;
         histogramName = "Energy Deposition by Muons_" + scintillatorName;
         man->CreateH1(treeName,histogramName,60,0.,12*MeV,"MeV");
@@ -240,9 +255,9 @@ void MyRunAction::histogramCreation(G4String scintillatorName,G4String scintilla
         treeName = "fEnergy vs fWlength_"+ scintillatorName;
         histogramName = "Photon Energy vs Photon Wavelength_" + scintillatorName;
         man->CreateH2(treeName,histogramName,80,2.4*eV,3.5*eV,60,300*nm,520*nm,"eV","nm");
-        man->SetH2XAxisTitle(noc,"Photon Energy (eV)");
-        man->SetH2YAxisTitle(noc,"Photon Wavelength (nm)");
-        man->SetH2ZAxisTitle(noc,"Number of Photons");
-        noc++;
-    
+        man->SetH2XAxisTitle(noc2,"Photon Energy (eV)");
+        man->SetH2YAxisTitle(noc2,"Photon Wavelength (nm)");
+        man->SetH2ZAxisTitle(noc2,"Number of Photons");
+        noc=noc+10;
+        noc2++;
 }

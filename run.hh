@@ -17,5 +17,6 @@ public:
     virtual void BeginOfRunAction(const G4Run *);
     virtual void EndOfRunAction(const G4Run *);
     static G4int noc; //number of calls of void funcion histogramCreation. This variable is used as a counter
+    static G4int noc2;
 };
 #endif

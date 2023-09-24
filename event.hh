@@ -8,6 +8,7 @@
 #include "G4RunManager.hh"
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
+#include "construction.hh"
 class MyEventAction:public G4UserEventAction{
 public:
 MyEventAction(MyRunAction*);
@@ -18,11 +19,13 @@ G4Mutex mutex;
     //Creation of a method that acumulates the energy deposition.
     void AddEdep(G4double edep){fEdep +=edep;}
     void AddNumber(){fnumber++;}
+    void AddEdepSCBT(G4String name, G4double edep);
 private:
 G4double fEdep,meanTF,meanNF,hola;
 G4double fnumber;
 G4int total=0,n=0,total2=0;
 
+G4double fEdepX1,fEdepY1,fEdepCZ,fEdepS0,fEdepS1,fEdepS2,fEdepBC,fEdepACOR,fEdepUNAM,fEdepFERM, fEdepX2;
 
 };
 

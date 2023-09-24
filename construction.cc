@@ -331,7 +331,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
 
         rectangularPhysicalVolume(FermLength, FermWidth, FermThickness,detectorLength, 0.*cm, 0.*cm, 194.35*cm,EJMat,physX1, logicDetectorX1, "FERMSC");
 
-        rectangularPhysicalVolume(X2Length, X2Width, X2Thickness,detectorLength, 0.*cm, 0.*cm, 210.1*cm,BCMat,physX1, logicDetectorX1, "X2SC");
+        rectangularPhysicalVolume(X2Length, X2Width, X2Thickness,detectorLength, 0.*cm, 0.*cm, 210.1*cm,BCMat,physX1, logicDetectorX1, "X2SC"); 
 
         
         
@@ -557,7 +557,7 @@ void MyDetectorConstruction::rectangularPhysicalVolume(G4double length, G4double
         
         upperDetector=new G4PVPlacement(0,G4ThreeVector(0.,(length/2)+1*mm,Zcoordinate),logicalDetector,"physDetector1",logicWorld,false,copyNumberSC+3,true);
         lowerDetector =new G4PVPlacement(0,G4ThreeVector(0.,(-1*length/2)-1*mm,Zcoordinate),logicalDetector,"physDetector2",logicWorld,false,copyNumberSC+4,true);
-        G4cout<<nombre<<" "<< "UpperDetector:"<<copyNumberSC+3<<"LowerDetector:"<<copyNumberSC+4<<" PhysicalVolume: "<<copyNumberSC+3<<G4endl;
+        G4cout<<nombre<<" "<< " UpperDetector: "<<copyNumberSC+3<<" LowerDetector: "<<copyNumberSC+4<<" PhysicalVolume: "<<copyNumberSC+2<<G4endl;
         copyNumberSC=copyNumberSC+4;
         
 }

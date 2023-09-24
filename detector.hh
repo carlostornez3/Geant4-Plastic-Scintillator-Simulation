@@ -6,11 +6,12 @@
 #include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "event.hh"
-
+#include "construction.hh"
 class MySensitiveDetector: public G4VSensitiveDetector{
     public:
     MySensitiveDetector(G4String);
     ~MySensitiveDetector();
+    void histogramFilling(G4double scintillatorPosition);
     
     private:
     virtual G4bool ProcessHits(G4Step *,G4TouchableHistory *);
