@@ -30,7 +30,7 @@ public:
     MyDetectorConstruction();
     ~MyDetectorConstruction();
     G4LogicalVolume *GetScoringVolume() const{return fScoringVolume;}
-    void rectangularPhysicalVolume(G4double length, G4double width, G4double thickness,G4double sensorLength, G4double Xcoordinate, G4double Ycoordinate, G4double Zcoordinate,G4Material *material, G4VPhysicalVolume *physicalVolume, G4LogicalVolume *logicalDetector, G4String nombre);
+    void rectangularPhysicalVolume(G4double length, G4double width, G4double thickness,G4double sensorLength, G4double Xcoordinate, G4double Ycoordinate, G4double Zcoordinate,G4Material *material, G4VPhysicalVolume *physicalVolume, G4LogicalVolume *logicalDetector, G4LogicalVolume *logicSC, G4String nombre);
     void ScintillatorProperties(G4String type,G4String geometry,G4int thickness, G4String numberOfSensors, G4String arrangement);
     virtual G4VPhysicalVolume *Construct();
     static G4String scintillatorType;
@@ -71,6 +71,7 @@ private:
     
     G4Box *solidWorld,*solidDetector, *innerBox,*externalBox,*sensorBox,*solidDetector2;
     G4LogicalVolume *logicWorld,*logicSC, *logicMylar;
+    G4LogicalVolume *logicSCX1, *logicSCY1;
     G4VPhysicalVolume *physWorld,*physSC,*physDetectorX1,*physDetectorX2,*physDetector,*physMylar,*physDetectorY1,*physDetectorY2,*physDetector1,*physDetector2, *upperDetector, *lowerDetector;
     G4VSolid* xtru, *xtruExternal, *xtruInner;
     G4SubtractionSolid  *externalInner, *externalSensor1, *externalSensor2,*externalSensor;

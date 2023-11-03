@@ -149,7 +149,7 @@ MyRunAction::MyRunAction(){
    } else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"){
         noc=0;
         noc2=0;
-        G4int fevents=10;
+        G4int fevents=100;
         histogramCreation("X1","BC",12.,fevents,0*ns,12*ns);
         histogramCreation("Y1","BC",12.,fevents,0*ns,12*ns);
         histogramCreation("CZ","EJ208",12.,fevents,0*ns,12*ns);
@@ -233,14 +233,14 @@ void MyRunAction::histogramCreation(G4String scintillatorName,G4String scintilla
 
         treeName = "MTOF_"+ scintillatorName;
         histogramName = "Mean Time of Flight_" + scintillatorName;
-        man->CreateH1(treeName,histogramName,60,mtofLL,mtofUL,"ns");
+        man->CreateH1(treeName,histogramName,120,mtofLL,mtofUL,"ns");
         man->SetH1XAxisTitle(noc+7,"Time of flight (ns)");
         //man->SetH1YAxisTitle(16,"Number of Photons");
 
 
         treeName = "fEvent4_"+ scintillatorName;
         histogramName = "_" + scintillatorName;
-        man->CreateH1(treeName,histogramName,1000,0,100000,"none");
+        man->CreateH1(treeName,histogramName,1000,0,10000000,"none");
         man->SetH1YAxisTitle(noc+8,"Event");
         man->SetH1XAxisTitle(noc+8,"Number of Photons");
         man->SetH1Activation(noc+8, false);
@@ -248,7 +248,7 @@ void MyRunAction::histogramCreation(G4String scintillatorName,G4String scintilla
         
         treeName = "fPhoton_"+ scintillatorName;
         histogramName = "Amount of Photons produced_" + scintillatorName;
-        man->CreateH1(treeName,histogramName,150,0,15000,"none");
+        man->CreateH1(treeName,histogramName,500,0,50000,"none");
         man->SetH1YAxisTitle(noc+9,"Events");
         man->SetH1XAxisTitle(noc+9,"Number of Photons");
 

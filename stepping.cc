@@ -28,72 +28,111 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         G4VPhysicalVolume* physicalVolume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
         G4int copyNumber = physicalVolume->GetCopyNo();
         
+        G4ParticleDefinition* particleDefinition = step->GetTrack()->GetDefinition();
+
+    // Obtener el nombre de la partícula
+        G4String particleName = particleDefinition->GetParticleName();
+        G4double edep = step->GetTotalEnergyDeposit();
+
+   
         
-        //Acumulates the energy in the step using the method created in event.hh
-        //G4cout<<copyNumber<<G4endl;
         if(copyNumber == 2){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("X1",edep);
+            
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("X1",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseX1",edep);
+                }
             
         }
 
         if(copyNumber == 6){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("Y1",edep);
+           if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("Y1",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseY1",edep);
+                }
             
         }
 
         if(copyNumber == 10){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("CZ",edep);
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("CZ",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseCZ",edep);
+                }
             
         }
 
         if(copyNumber == 14){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("S0",edep);
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("S0",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseS0",edep);
+                }
             
         }
 
         if(copyNumber == 18){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("S1",edep);
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("S1",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseS1",edep);
+                }
             
         }
 
         if(copyNumber == 22){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("S2",edep);
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("S2",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseS2",edep);
+                }
             
         }
 
         if(copyNumber == 26){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("BC",edep);
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("BC",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseBC",edep);
+                }
             
         }
 
         if(copyNumber == 30){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("ACOR",edep);
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("ACOR",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseACOR",edep);
+                }
             
         }
 
         if(copyNumber == 34){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("UNAM",edep);
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("UNAM",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseUNAM",edep);
+                }
             
         }
 
         if(copyNumber == 38){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("FERM",edep);
+           if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("FERM",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseFERM",edep);
+                }
             
         }
 
         if(copyNumber == 42){
-            G4double edep = step->GetTotalEnergyDeposit();
-            fEventAction->AddEdepSCBT("X2",edep);
+            if(particleName == "mu-" || particleName == "pi+"){
+                fEventAction->AddEdepSCBT("X2",edep);
+            }else {
+                fEventAction->AddEdepSCBT("noiseX2",edep);
+                }
             
         }
         

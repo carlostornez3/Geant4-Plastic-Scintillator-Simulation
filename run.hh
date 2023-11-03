@@ -2,11 +2,12 @@
 #define RUN_HH
 
 #include "G4UserRunAction.hh"
-#include "G4GenericAnalysisManager.hh"
+//#include "G4GenericAnalysisManager.hh"
 #include "G4Run.hh"
 #include "G4SystemOfUnits.hh"
+#include "g4root.hh"
 
-using G4AnalysisManager = G4GenericAnalysisManager;
+//using G4AnalysisManager = G4GenericAnalysisManager;
 
 class MyRunAction:public G4UserRunAction{
 public:

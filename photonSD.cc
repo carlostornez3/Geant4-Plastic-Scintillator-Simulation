@@ -1,21 +1,19 @@
-#include "detector.hh"
-#include "G4UnitsTable.hh"
-#include <cmath>
+#include "photonSD.hh"
 
-G4int MySensitiveDetector::noc;
-MySensitiveDetector::MySensitiveDetector(G4String name):G4VSensitiveDetector(name)
+G4int MyPhotoDetector::noc;
+MyPhotoDetector::MyPhotoDetector(G4String name):G4VSensitiveDetector(name)
 {   
  npX1=0,npY1=0,npCZ=0,npS0=0,npS1=0,npS2=0,npBC=0,npACORDE=0,npUNAM=0,npFERM=0,npX2=0;
  evtX1=0,evtY1=0,evtCZ=0,evtS0=0,evtS1=0,evtS2=0,evtBC=0,evtACORDE=0,evtUNAM=0,evtFERM=0,evtX2=0;
 }
-MySensitiveDetector::~MySensitiveDetector(){
+MyPhotoDetector::~MyPhotoDetector(){
 
 }
-G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist){
+G4bool MyPhotoDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist){
     G4AnalysisManager *man = G4AnalysisManager::Instance();
     //Definition of what will fill the histograms
     G4Track *track=aStep->GetTrack();
-   // track->SetTrackStatus(fStopAndKill);
+    track->SetTrackStatus(fStopAndKill);
     const G4VTouchable *touchable = aStep->GetPreStepPoint()->GetTouchable();
     G4int copyNo = touchable -> GetCopyNumber();
     if(MyDetectorConstruction::scintillatorArrangement == "SC"){
@@ -87,7 +85,7 @@ if (track) {
         G4VPhysicalVolume* physicalVolume = aStep->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
         G4int copyNumber = physicalVolume->GetCopyNo();
         G4Track *track=aStep->GetTrack();
-    track->SetTrackStatus(fStopAndKill);
+   // track->SetTrackStatus(fStopAndKill);
     G4StepPoint *preStepPoint=aStep->GetPreStepPoint();
     G4StepPoint *postStepPoint=aStep->GetPostStepPoint();
     const G4ParticleDefinition* particleDefinition = track->GetDefinition();
@@ -158,7 +156,7 @@ if (track) {
     }
 return true;}
 
-void MySensitiveDetector::histogramFilling(G4String scintillatorName, G4int scintillatorPosition, G4int& evtNumber, G4int& numberOfPhotons,G4Step *aStep){
+void MyPhotoDetector::histogramFilling(G4String scintillatorName, G4int scintillatorPosition, G4int& evtNumber, G4int& numberOfPhotons,G4Step *aStep){
     G4AnalysisManager *man = G4AnalysisManager::Instance();
     
     G4Track *track=aStep->GetTrack();

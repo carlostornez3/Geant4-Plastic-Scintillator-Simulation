@@ -1,12 +1,12 @@
 #include "construction.hh"
-#include <iostream>
-#include <tuple>
+
 G4String MyDetectorConstruction::scintillatorType;
 G4String MyDetectorConstruction::scintillatorGeometry;
 G4String MyDetectorConstruction::scintillatorNumberOfSensors;
 G4int MyDetectorConstruction::scintillatorThickness;
 G4int MyDetectorConstruction::copyNumberSC;
 G4String MyDetectorConstruction::scintillatorArrangement;
+
 
 MyDetectorConstruction::MyDetectorConstruction(){
    
@@ -313,27 +313,42 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
         logicDetectorUnamEJ=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
         logicDetectorX2 = new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");*/
         copyNumberSC=0;
-        rectangularPhysicalVolume(X1Length, X1Width, X1Thickness,detectorLength, 0.*cm, 0.*cm, 80.75*cm,BCMat,physX1, logicDetectorX1,"X1SC");
-        rectangularPhysicalVolume(Y1Length, Y1Width, Y1Thickness,detectorLength, 0.*cm, 0.*cm, 92.*cm,BCMat,physX1, logicDetectorX1,"Y1SC");
-        rectangularPhysicalVolume(length, width, CZEJThickness,detectorLength, 0.*cm, 0.*cm, 124.15*cm,EJMat,physX1, logicDetectorX1,"CZEJ");
-
-        rectangularPhysicalVolume(length, width, SEJThickness,detectorLength, 0.*cm, 0.*cm, 136.25*cm,EJMat,physX1, logicDetectorX1,"SEJ0");
-
-        rectangularPhysicalVolume(length, width, SEJThickness,detectorLength, 0.*cm, 0.*cm, 148.25*cm,EJMat,physX1, logicDetectorX1,"SEJ1");
-
-        rectangularPhysicalVolume(length, width, SEJThickness,detectorLength, 0.*cm, 0.*cm, 160.35*cm,EJMat,physX1, logicDetectorX1,"SEJ2");
-
-        rectangularPhysicalVolume(BCLength, BCWidth, BCThickness,detectorLength, 0.*cm, 0.*cm, 173.4*cm,BCMat,physX1, logicDetectorX1,"BCSC");
-
-        rectangularPhysicalVolume(length, width, AcordeEJThickness,detectorLength, 0.*cm, 0.*cm, 181.6*cm,EJMat,physX1, logicDetectorX1,"ACORDESC");
-
-        rectangularPhysicalVolume(length, width, UNAMEJThickness,detectorLength, 0.*cm, 0.*cm, 188.85*cm,EJMat,physX1, logicDetectorX1,"UNAMEJ");
-
-        rectangularPhysicalVolume(FermLength, FermWidth, FermThickness,detectorLength, 0.*cm, 0.*cm, 194.35*cm,EJMat,physX1, logicDetectorX1, "FERMSC");
-
-        rectangularPhysicalVolume(X2Length, X2Width, X2Thickness,detectorLength, 0.*cm, 0.*cm, 210.1*cm,BCMat,physX1, logicDetectorX1, "X2SC"); 
+       // G4Box *solidScintillator = new G4Box("solidScintillator",X1Width/2,X1Length/2,X1Thickness/2);
+       // logicSC= new G4LogicalVolume(solidScintillator,worldMat, "logicSC");
+        //physSC =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicSC,"physSC",logicWorld,false,2,true);
 
         
+        //logicDetectorY1 = new G4LogicalVolume(solidScintillator,worldMat,"logicalDetector");
+        //physY1= new G4PVPlacement(0,G4ThreeVector(0.,0.,90.*cm),logicDetectorY1,"physSC",logicWorld,false,2,true);
+       
+        G4Box *solidScintillator = new G4Box("solidScintillator",X1Width/2,X1Length/2,X1Thickness/2);
+        logicSCX1= new G4LogicalVolume(solidScintillator,BCMat, "logicSCX1");
+        rectangularPhysicalVolume(X1Length, X1Width, X1Thickness,detectorLength, 0.*cm, 0.*cm, 80.75*cm,BCMat,physX1, logicDetectorX1,logicSCX1,"X1SC");
+
+
+        solidScintillator = new G4Box("solidScintillator",Y1Width/2,Y1Length/2,Y1Thickness/2);
+        logicSCY1= new G4LogicalVolume(solidScintillator,BCMat, "logicSCY1");
+        rectangularPhysicalVolume(Y1Length, Y1Width, Y1Thickness,detectorLength, 0.*cm, 0.*cm, 92.*cm,BCMat,physX1, logicDetectorX1,logicSCY1,"Y1SC");
+      /*  rectangularPhysicalVolume(length, width, CZEJThickness,detectorLength, 0.*cm, 0.*cm, 124.15*cm,EJMat,physX1, logicDetectorX1,logicSC,"CZEJ");
+
+        rectangularPhysicalVolume(length, width, SEJThickness,detectorLength, 0.*cm, 0.*cm, 136.25*cm,EJMat,physX1, logicDetectorX1,logicSC,"SEJ0");
+
+        rectangularPhysicalVolume(length, width, SEJThickness,detectorLength, 0.*cm, 0.*cm, 148.25*cm,EJMat,physX1, logicDetectorX1,logicSC,"SEJ1");
+
+        rectangularPhysicalVolume(length, width, SEJThickness,detectorLength, 0.*cm, 0.*cm, 160.35*cm,EJMat,physX1, logicDetectorX1,logicSC,"SEJ2");
+
+        rectangularPhysicalVolume(BCLength, BCWidth, BCThickness,detectorLength, 0.*cm, 0.*cm, 173.4*cm,BCMat,physX1, logicDetectorX1,logicSC,"BCSC");
+
+        rectangularPhysicalVolume(length, width, AcordeEJThickness,detectorLength, 0.*cm, 0.*cm, 181.6*cm,EJMat,physX1, logicDetectorX1,logicSC,"ACORDESC");
+
+        rectangularPhysicalVolume(length, width, UNAMEJThickness,detectorLength, 0.*cm, 0.*cm, 188.85*cm,EJMat,physX1, logicDetectorX1,logicSC,"UNAMEJ");
+
+        rectangularPhysicalVolume(FermLength, FermWidth, FermThickness,detectorLength, 0.*cm, 0.*cm, 194.35*cm,EJMat,physX1, logicDetectorX1,logicSC, "FERMSC");
+
+        rectangularPhysicalVolume(X2Length, X2Width, X2Thickness,detectorLength, 0.*cm, 0.*cm, 210.1*cm,BCMat,physX1, logicDetectorX1,logicSC, "X2SC"); */
+
+        
+      //  logicDetectorX1->SetSensitiveDetector(photosensorDetector);
         
 
         //rectangularPhysicalVolume(Y1Length, X1Width, X1Thickness,detectorLength, 0.*cm, 0.*cm, 70.*cm,BCMat,physY1,physDetectorX1,physDetectorX2, logicDetector);
@@ -385,10 +400,22 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
 
 //Predefined method used to tell Geant4 what objects are detectors. 
 void MyDetectorConstruction::ConstructSDandField(){
-    MySensitiveDetector *sensDet = new MySensitiveDetector("SensitiveDetector");
-    
+   // MySensitiveDetector *sensDet = new MySensitiveDetector("SensitiveDetector");
+        G4SDManager* sdManager = G4SDManager::GetSDMpointer();
+
+        // Asociar el detector a las barras de plástico centelleador
+        MyBarDetector* barDetector = new MyBarDetector("BarDetectorSD");
+        sdManager->AddNewDetector(barDetector);
+        logicSCX1->SetSensitiveDetector(barDetector);
+        logicSCY1->SetSensitiveDetector(barDetector);
+
+        // Asociar el detector a los fotosensores
+        MyPhotoDetector* photosensorDetector = new MyPhotoDetector("PhotosensorDetectorSD");
+        sdManager->AddNewDetector(photosensorDetector);
+        logicDetectorX1->SetSensitiveDetector(photosensorDetector);
    //logicDetector->SetSensitiveDetector(sensDet);
-    logicDetectorX1->SetSensitiveDetector(sensDet);
+  //  logicDetectorX1->SetSensitiveDetector(sensDet);
+  //  logicSC->SetSensitiveDetector(sensDet);
     /*logicDetectorY1->SetSensitiveDetector(sensDet);
     logicDetectorBC->SetSensitiveDetector(sensDet);
    logicDetectorCZ->SetSensitiveDetector(sensDet);
@@ -526,7 +553,7 @@ void MyDetectorConstruction::hexagonalGeometry(){
     logicDetector = new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
     G4VPhysicalVolume *physDetector=new G4PVPlacement(0,G4ThreeVector(0.,2.6*cm,10.*cm),logicDetector,"physDetector",logicWorld,false,3,true);
 }
-void MyDetectorConstruction::rectangularPhysicalVolume(G4double length, G4double width, G4double thickness,G4double sensorLength, G4double Xcoordinate, G4double Ycoordinate, G4double Zcoordinate,G4Material *material, G4VPhysicalVolume *physicalVolume, G4LogicalVolume *logicalDetector, G4String nombre){
+void MyDetectorConstruction::rectangularPhysicalVolume(G4double length, G4double width, G4double thickness,G4double sensorLength, G4double Xcoordinate, G4double Ycoordinate, G4double Zcoordinate,G4Material *material, G4VPhysicalVolume *physicalVolume, G4LogicalVolume *logicalDetector, G4LogicalVolume *logicSC,G4String nombre){
         
         G4TwoVector offsetA(0,0), offsetB(0,0);
         G4double scaleA = 1, scaleB = 1;
@@ -549,8 +576,8 @@ void MyDetectorConstruction::rectangularPhysicalVolume(G4double length, G4double
 
         
 
-        G4Box *solidScintillator = new G4Box("solidScintillator",width/2,length/2,thickness/2);
-        logicSC= new G4LogicalVolume(solidScintillator,material, "logicSC");
+       // G4Box *solidScintillator = new G4Box("solidScintillator",width/2,length/2,thickness/2);
+        //logicSC= new G4LogicalVolume(solidScintillator,material, "logicSC");
         physicalVolume =new G4PVPlacement(0,G4ThreeVector(0.,0.,Zcoordinate),logicSC,"physSC",logicWorld,false,copyNumberSC+2,true);
         
         
