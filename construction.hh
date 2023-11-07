@@ -71,7 +71,7 @@ private:
     
     G4Box *solidWorld,*solidDetector, *innerBox,*externalBox,*sensorBox,*solidDetector2;
     G4LogicalVolume *logicWorld,*logicSC, *logicMylar;
-    G4LogicalVolume *logicSCX1, *logicSCY1;
+    G4LogicalVolume *logicSCX1, logicSCY1;
     G4VPhysicalVolume *physWorld,*physSC,*physDetectorX1,*physDetectorX2,*physDetector,*physMylar,*physDetectorY1,*physDetectorY2,*physDetector1,*physDetector2, *upperDetector, *lowerDetector;
     G4VSolid* xtru, *xtruExternal, *xtruInner;
     G4SubtractionSolid  *externalInner, *externalSensor1, *externalSensor2,*externalSensor;

@@ -5,8 +5,8 @@
 //#include "G4GenericAnalysisManager.hh"
 #include "G4Run.hh"
 #include "G4SystemOfUnits.hh"
-#include "g4root.hh"
-
+//#include "g4root.hh"
+#include "G4AnalysisManager.hh"
 //using G4AnalysisManager = G4GenericAnalysisManager;
 
 class MyRunAction:public G4UserRunAction{
