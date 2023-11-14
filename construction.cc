@@ -299,36 +299,59 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
         G4double detectorLength = 6*mm;
         G4double length = 100*cm, width = 5*cm, thickness = 2.5*cm, sensorLength = 6.*mm, Zcoordinate = 50*cm;
 
-
-        solidDetector=new G4Box("solidDetector",detectorLength/2,1.*mm,sensorLength/2);
-        logicDetectorX1 = new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-       /* logicDetectorY1=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorBC=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorCZ=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorFerm=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorEJS0=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorEJS1=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorEJS2=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorAcorde=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorUnamEJ=new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");
-        logicDetectorX2 = new G4LogicalVolume(solidDetector,worldMat,"logicalDetector");*/
         copyNumberSC=0;
-       // G4Box *solidScintillator = new G4Box("solidScintillator",X1Width/2,X1Length/2,X1Thickness/2);
-       // logicSC= new G4LogicalVolume(solidScintillator,worldMat, "logicSC");
-        //physSC =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicSC,"physSC",logicWorld,false,2,true);
+       
+       
+
+       //X1 ___ COPYSC=0
+
+      // G4double length, G4double width, G4double thickness,G4double sensorLength, G4double Xcoordinate, G4double Ycoordinate, G4double Zcoordinate,G4Material *material, G4VPhysicalVolume *physicalVolume, G4LogicalVolume *logicalDetector, G4LogicalVolume *logicSC,G4String nombre
+
+        length = X1Length,width = X1Width,thickness = X1Thickness,sensorLength = detectorLength,Zcoordinate = 80.75*cm,material = BCMat,physicalVolume physX1, logicalDetector =  logicDetectorX1,logicSCX1,"X1SC"
+        length =X1Length, width = X1Width
+        G4TwoVector offsetA(0,0), offsetB(0,0);
+        G4double scaleA = 1, scaleB = 1;
+        
+        
+        
+        G4ThreeVector yTrans1(0,length/2,0);
+        G4ThreeVector yTrans2(0,-1*length/2,0);
+        yRot->rotateY(0*rad);
+        innerBox = new G4Box("innerBox",width/2,length/2,thickness/2);
+        externalBox = new G4Box("externalBox",(width/2)+1*mm,(length/2)+1*mm,(thickness/2)+1*mm);
+        sensorBox = new G4Box("sensorBox",sensorLength/2,1.*mm,sensorLength/2);
+
+        externalInner= new G4SubtractionSolid("External-Inner", externalBox, innerBox);
+        externalSensor1=new G4SubtractionSolid("External-Inner-Sensor1", externalInner, sensorBox, yRot, yTrans1);
+        externalSensor2=new G4SubtractionSolid("External-Inner-Sensor2", externalSensor1, sensorBox, yRot, yTrans2);
+        logicMylar= new G4LogicalVolume(externalSensor2,mylarMat, "logicMylar");
+        G4LogicalSkinSurface *skin = new G4LogicalSkinSurface("skin",logicMylar,mirrorSurface);
+        physMylar =new G4PVPlacement(0,G4ThreeVector(0.,0.,Zcoordinate),logicMylar,"physMylar",logicWorld,false,copyNumberSC+1,true);
 
         
-        //logicDetectorY1 = new G4LogicalVolume(solidScintillator,worldMat,"logicalDetector");
-        //physY1= new G4PVPlacement(0,G4ThreeVector(0.,0.,90.*cm),logicDetectorY1,"physSC",logicWorld,false,2,true);
-       
-        G4Box *solidScintillator = new G4Box("solidScintillator",X1Width/2,X1Length/2,X1Thickness/2);
-        logicSCX1= new G4LogicalVolume(solidScintillator,BCMat, "logicSCX1");
-        rectangularPhysicalVolume(X1Length, X1Width, X1Thickness,detectorLength, 0.*cm, 0.*cm, 80.75*cm,BCMat,physX1, logicDetectorX1,logicSCX1,"X1SC");
+
+       // G4Box *solidScintillator = new G4Box("solidScintillator",width/2,length/2,thickness/2);
+        //logicSC= new G4LogicalVolume(solidScintillator,material, "logicSC");
+        physicalVolume =new G4PVPlacement(0,G4ThreeVector(0.,0.,Zcoordinate),logicSC,"physSC",logicWorld,false,copyNumberSC+2,true);
+        
+        
+        
+        upperDetector=new G4PVPlacement(0,G4ThreeVector(0.,(length/2)+1*mm,Zcoordinate),logicalDetector,"physDetector1",logicWorld,false,copyNumberSC+3,true);
+        lowerDetector =new G4PVPlacement(0,G4ThreeVector(0.,(-1*length/2)-1*mm,Zcoordinate),logicalDetector,"physDetector2",logicWorld,false,copyNumberSC+4,true);
+        G4cout<<nombre<<" "<< " UpperDetector: "<<copyNumberSC+3<<" LowerDetector: "<<copyNumberSC+4<<" PhysicalVolume: "<<copyNumberSC+2<<G4endl;
+        copyNumberSC=copyNumberSC+4;
 
 
-        solidScintillator = new G4Box("solidScintillator",Y1Width/2,Y1Length/2,Y1Thickness/2);
-        logicSCY1= new G4LogicalVolume(solidScintillator,BCMat, "logicSCY1");
-        rectangularPhysicalVolume(Y1Length, Y1Width, Y1Thickness,detectorLength, 0.*cm, 0.*cm, 92.*cm,BCMat,physX1, logicDetectorX1,logicSCY1,"Y1SC");
+
+        G4Box *solidScintillatorX1 = new G4Box("solidScintillatorX1",1*mm,X1Length/2,X1Thickness/2);
+        logicSCX1= new G4LogicalVolume(solidScintillator,worldMat, "logicSCX1");
+        physMylar =new G4PVPlacement(0,G4ThreeVector(0.,0.,10.*cm),logicSCX1,"physMylar",logicWorld,false,1,true);
+        //rectangularPhysicalVolume(X1Length, X1Width, X1Thickness,detectorLength, 0.*cm, 0.*cm, 80.75*cm,BCMat,physX1, logicDetectorX1,logicSCX1,"X1SC");
+
+
+        //solidScintillator = new G4Box("solidScintillator",Y1Width/2,Y1Length/2,Y1Thickness/2);
+        //logicSCY1= new G4LogicalVolume(solidScintillator,BCMat, "logicSCY1");
+        //rectangularPhysicalVolume(Y1Length, Y1Width, Y1Thickness,detectorLength, 0.*cm, 0.*cm, 92.*cm,BCMat,physX1, logicDetectorX1,logicSCY1,"Y1SC");
       /*  rectangularPhysicalVolume(length, width, CZEJThickness,detectorLength, 0.*cm, 0.*cm, 124.15*cm,EJMat,physX1, logicDetectorX1,logicSC,"CZEJ");
 
         rectangularPhysicalVolume(length, width, SEJThickness,detectorLength, 0.*cm, 0.*cm, 136.25*cm,EJMat,physX1, logicDetectorX1,logicSC,"SEJ0");
@@ -407,12 +430,12 @@ void MyDetectorConstruction::ConstructSDandField(){
         MyBarDetector* barDetector = new MyBarDetector("BarDetectorSD");
         sdManager->AddNewDetector(barDetector);
         logicSCX1->SetSensitiveDetector(barDetector);
-        logicSCY1->SetSensitiveDetector(barDetector);
+        //logicSCY1->SetSensitiveDetector(barDetector);
 
         // Asociar el detector a los fotosensores
         MyPhotoDetector* photosensorDetector = new MyPhotoDetector("PhotosensorDetectorSD");
-        sdManager->AddNewDetector(photosensorDetector);
-        logicDetectorX1->SetSensitiveDetector(photosensorDetector);
+       // sdManager->AddNewDetector(photosensorDetector);
+        //logicDetectorX1->SetSensitiveDetector(photosensorDetector);
    //logicDetector->SetSensitiveDetector(sensDet);
   //  logicDetectorX1->SetSensitiveDetector(sensDet);
   //  logicSC->SetSensitiveDetector(sensDet);
@@ -576,8 +599,8 @@ void MyDetectorConstruction::rectangularPhysicalVolume(G4double length, G4double
 
         
 
-       // G4Box *solidScintillator = new G4Box("solidScintillator",width/2,length/2,thickness/2);
-        //logicSC= new G4LogicalVolume(solidScintillator,material, "logicSC");
+        G4Box *solidScintillator = new G4Box("solidScintillator",width/2,length/2,thickness/2);
+        logicSC= new G4LogicalVolume(solidScintillator,material, "logicSC");
         physicalVolume =new G4PVPlacement(0,G4ThreeVector(0.,0.,Zcoordinate),logicSC,"physSC",logicWorld,false,copyNumberSC+2,true);
         
         
