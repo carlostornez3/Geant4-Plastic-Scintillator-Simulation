@@ -20,7 +20,7 @@ class MyBarDetector : public G4VSensitiveDetector{
     public:
     MyBarDetector(G4String);
     ~MyBarDetector();
-    std::unordered_map<G4int, std::set<G4int>> registeredParticlesMap;
+    
   //  virtual void  EndOfEvent (G4HCofThisEvent *);
     private:
     virtual G4bool ProcessHits(G4Step *,G4TouchableHistory *);

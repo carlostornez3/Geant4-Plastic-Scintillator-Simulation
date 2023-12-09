@@ -14,6 +14,7 @@ public:
     MyRunAction();
     ~MyRunAction();
     void histogramCreation(G4String scintillatorName,G4String scintillatorType, G4double thickness, G4int numberOfEvents, G4double mtofLL, G4double mtofUL);
+    void NtupleCreation(G4String scintillatorName,G4String category,G4int tupleNumber);
     G4String treeName, histogramName;
     virtual void BeginOfRunAction(const G4Run *);
     virtual void EndOfRunAction(const G4Run *);

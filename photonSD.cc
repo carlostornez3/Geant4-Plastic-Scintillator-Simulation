@@ -11,11 +11,7 @@ MyPhotoDetector::~MyPhotoDetector(){
 }
 G4bool MyPhotoDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist){
     G4AnalysisManager *man = G4AnalysisManager::Instance();
-    //Definition of what will fill the histograms
-    G4Track *track=aStep->GetTrack();
-    track->SetTrackStatus(fStopAndKill);
-    const G4VTouchable *touchable = aStep->GetPreStepPoint()->GetTouchable();
-    G4int copyNo = touchable -> GetCopyNumber();
+    
     if(MyDetectorConstruction::scintillatorArrangement == "SC"){
     G4StepPoint *preStepPoint=aStep->GetPreStepPoint();
     G4StepPoint *postStepPoint=aStep->GetPostStepPoint();
@@ -85,72 +81,72 @@ if (track) {
         G4VPhysicalVolume* physicalVolume = aStep->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
         G4int copyNumber = physicalVolume->GetCopyNo();
         G4Track *track=aStep->GetTrack();
-   // track->SetTrackStatus(fStopAndKill);
-    G4StepPoint *preStepPoint=aStep->GetPreStepPoint();
-    G4StepPoint *postStepPoint=aStep->GetPostStepPoint();
-    const G4ParticleDefinition* particleDefinition = track->GetDefinition();
-    G4String particleName = particleDefinition->GetParticleName();
+        track->SetTrackStatus(fStopAndKill);
+        G4StepPoint *preStepPoint=aStep->GetPreStepPoint();
+        G4StepPoint *postStepPoint=aStep->GetPostStepPoint();
+        const G4ParticleDefinition* particleDefinition = track->GetDefinition();
+        G4String particleName = particleDefinition->GetParticleName();
 
-    G4ThreeVector pos = preStepPoint->GetPosition();
-    if(particleName != "opticalphoton"){
-        G4cout<<"Particula: "<<particleName<<" coordenadas: "<<pos<<G4endl;
-    }
-
-        if(copyNumber == 3 || copyNumber == 4){
-            histogramFilling("X1",0,evtX1,npX1,aStep);}
-       //if(copyNumber == 2 || copyNumber == 6){G4cout<<copyNumber<<G4endl;}
-        if(copyNumber == 7 || copyNumber == 8){
-            histogramFilling("Y1",1,evtY1,npY1,aStep);
-
+        G4ThreeVector pos = preStepPoint->GetPosition();
+        if(particleName != "opticalphoton"){
+            return true;
         }
 
-        if(copyNumber == 11 || copyNumber == 12){
-            histogramFilling("CZ",2,evtCZ,npCZ,aStep);
-        }
+            if(copyNumber == 3 || copyNumber == 4){
+                histogramFilling("X1",0,evtX1,npX1,aStep);}
+        //if(copyNumber == 2 || copyNumber == 6){G4cout<<copyNumber<<G4endl;}
+            if(copyNumber == 7 || copyNumber == 8){
+                histogramFilling("Y1",1,evtY1,npY1,aStep);
 
-        if(copyNumber == 15 || copyNumber == 16 ){
-            histogramFilling("S0",3,evtS0,npS0,aStep);
-         
-        }
+            }
 
-        if(copyNumber == 19|| copyNumber == 20 ){
-            histogramFilling("S1",4,evtS1,npS1,aStep);
-        }
+            if(copyNumber == 11 || copyNumber == 12){
+                histogramFilling("CZ",2,evtCZ,npCZ,aStep);
+            }
 
-        if(copyNumber == 23 || copyNumber == 24 ){
-            histogramFilling("S2",5,evtS2,npS2,aStep);
+            if(copyNumber == 15 || copyNumber == 16 ){
+                histogramFilling("S0",3,evtS0,npS0,aStep);
             
-        }
+            }
 
-        if(copyNumber == 27|| copyNumber == 28){
+            if(copyNumber == 19|| copyNumber == 20 ){
+                histogramFilling("S1",4,evtS1,npS1,aStep);
+            }
+
+            if(copyNumber == 23 || copyNumber == 24 ){
+                histogramFilling("S2",5,evtS2,npS2,aStep);
+                
+            }
+
+            if(copyNumber == 27|| copyNumber == 28){
+                histogramFilling("BC",6,evtBC,npBC,aStep);
+            }
+
+            if(copyNumber == 31|| copyNumber == 32){
+                histogramFilling("ACORDE",7,evtACORDE,npACORDE,aStep);
+            }
+
+            if(copyNumber ==35 || copyNumber == 36){
+                histogramFilling("UNAM",8,evtUNAM,npUNAM,aStep);
+            }
+
+            if(copyNumber == 39|| copyNumber == 40){
+                histogramFilling("FERM",9,evtFERM,npFERM,aStep);
+            }
+
+            if(copyNumber == 43 || copyNumber == 44){
+                histogramFilling("X2",10,evtX2,npX2,aStep);
+            }
+
+        /* histogramFilling("CZ",2,evtCZ,npCZ,aStep);
+            histogramFilling("S0",3,evtS0,npS0,aStep);
+            histogramFilling("S1",4,evtS1,npS1,aStep);
+            histogramFilling("S2",5,evtS2,npS2,aStep);
             histogramFilling("BC",6,evtBC,npBC,aStep);
-        }
-
-        if(copyNumber == 31|| copyNumber == 32){
             histogramFilling("ACORDE",7,evtACORDE,npACORDE,aStep);
-        }
-
-        if(copyNumber ==35 || copyNumber == 36){
             histogramFilling("UNAM",8,evtUNAM,npUNAM,aStep);
-        }
-
-        if(copyNumber == 39|| copyNumber == 40){
             histogramFilling("FERM",9,evtFERM,npFERM,aStep);
-        }
-
-        if(copyNumber == 43 || copyNumber == 44){
-            histogramFilling("X2",10,evtX2,npX2,aStep);
-        }
-
-       /* histogramFilling("CZ",2,evtCZ,npCZ,aStep);
-        histogramFilling("S0",3,evtS0,npS0,aStep);
-        histogramFilling("S1",4,evtS1,npS1,aStep);
-        histogramFilling("S2",5,evtS2,npS2,aStep);
-        histogramFilling("BC",6,evtBC,npBC,aStep);
-        histogramFilling("ACORDE",7,evtACORDE,npACORDE,aStep);
-        histogramFilling("UNAM",8,evtUNAM,npUNAM,aStep);
-        histogramFilling("FERM",9,evtFERM,npFERM,aStep);
-        histogramFilling("X2",10,evtX2,npX2,aStep);*/
+            histogramFilling("X2",10,evtX2,npX2,aStep);*/
 
 
     }

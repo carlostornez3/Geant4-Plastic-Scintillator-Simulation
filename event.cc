@@ -49,7 +49,7 @@ void MyEventAction::EndOfEventAction(const G4Event*){
         G4AnalysisManager *man=G4AnalysisManager::Instance();
         G4int evt =G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
         G4cout<<"Evento: "<< evt<< G4endl;
-       
+       /*
         fillingHistograms("X1",0,fEdepX1,fEdepnoiseX1);
         fillingHistograms("Y1",1,fEdepY1,fEdepnoiseY1);
         fillingHistograms("CZ",2,fEdepCZ,fEdepnoiseCZ);
@@ -61,7 +61,7 @@ void MyEventAction::EndOfEventAction(const G4Event*){
         fillingHistograms("UNAM",8,fEdepUNAM,fEdepUNAM);
         fillingHistograms("FERM",9,fEdepFERM,fEdepFERM);
         fillingHistograms("X2",10,fEdepX2,fEdepnoiseX2);
-
+    */
         
     }
     //G4MUTEXUNLOCK(&mutex );
