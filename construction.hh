@@ -35,6 +35,11 @@ public:
     G4LogicalVolume *GetScoringVolume() const{return fScoringVolume;}
     void rectangularPhysicalVolume(G4double length, G4double width, G4double thickness,G4double sensorLength, G4double Xcoordinate, G4double Ycoordinate, G4double Zcoordinate,G4Material* MylarM ,G4Material *material, G4VPhysicalVolume *physicalVolume, G4LogicalVolume *logicalDetector, G4LogicalVolume *airLayer, G4String nombre);
     void ScintillatorProperties(G4String type,G4String geometry,G4int thickness, G4String numberOfSensors, G4String arrangement);
+    void BeamTestConfiguration(G4String arrangement, G4String particleName, G4String numberOfParticles, G4String particleEnergy, G4String numberOfEvents);
+
+
+
+
     virtual G4VPhysicalVolume *Construct();
     static G4String scintillatorType;
     static G4String scintillatorGeometry;
@@ -42,11 +47,16 @@ public:
     static G4int copyNumberSC;
     static G4String scintillatorNumberOfSensors;
     static G4String scintillatorArrangement;
+    static G4String NumberOfEvents;
+    static G4String ParticleEnergy;
+    static G4String NumberOfParticles;
+    static G4String ParticleName;
+
    
     G4double wavelength, lightOutput;
     void hexagonalGeometry();
     void rectangularGeometry();
-
+    G4SubtractionSolid * CreateRectangularShell(G4double length, G4double width, G4double thickness, G4double shellThickness);
 private: 
     G4LogicalVolume *logicDetector;
    

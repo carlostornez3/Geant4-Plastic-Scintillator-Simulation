@@ -4,4 +4,3 @@
 /run/initialize
 /control/execute gps.mac
 /process/optical/scintillation/setFiniteRiseTime true
-/run/beamOn 3

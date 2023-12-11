@@ -40,8 +40,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
             
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("X1",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseX1",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -49,8 +50,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 6){
            if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("Y1",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseY1",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -58,8 +60,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 10){
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("CZ",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseCZ",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -67,8 +70,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 14){
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("S0",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseS0",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -76,8 +80,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 18){
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("S1",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseS1",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -85,8 +90,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 22){
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("S2",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseS2",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -94,8 +100,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 26){
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("BC",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseBC",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -103,8 +110,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 30){
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("ACOR",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseACOR",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -112,8 +120,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 34){
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("UNAM",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseUNAM",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -121,8 +130,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 38){
            if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("FERM",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseFERM",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }
@@ -130,8 +140,9 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
         if(copyNumber == 42){
             if(particleName == "mu-" || particleName == "pi+"){
                 fEventAction->AddEdepSCBT("X2",edep);
-            }else {
+            }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseX2",edep);
+                G4cout<<particleName<< " "<<copyNumber<<G4endl;
                 }
             
         }

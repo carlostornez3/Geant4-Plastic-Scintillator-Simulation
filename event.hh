@@ -21,7 +21,7 @@ G4Mutex mutex;
     void AddEdep(G4double edep){fEdep +=edep;}
     void AddNumber(){fnumber++;}
     void AddEdepSCBT(G4String name, G4double edep);
-    void fillingHistograms(G4String name, G4int scintillatorPosition, G4double fedep, G4double fedepnoise);
+    void fillingNtuples(G4String name, G4int scintillatorPosition, G4double fedep, G4double fedepnoise);
 private:
 G4double fEdep,meanTF,meanNF,hola;
 G4double fnumber;

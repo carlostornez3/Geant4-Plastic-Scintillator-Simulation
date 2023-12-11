@@ -49,19 +49,19 @@ void MyEventAction::EndOfEventAction(const G4Event*){
         G4AnalysisManager *man=G4AnalysisManager::Instance();
         G4int evt =G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
         G4cout<<"Evento: "<< evt<< G4endl;
-       /*
-        fillingHistograms("X1",0,fEdepX1,fEdepnoiseX1);
-        fillingHistograms("Y1",1,fEdepY1,fEdepnoiseY1);
-        fillingHistograms("CZ",2,fEdepCZ,fEdepnoiseCZ);
-        fillingHistograms("S0",3,fEdepS0,fEdepnoiseS0);
-        fillingHistograms("S1",4,fEdepS1,fEdepnoiseS1);
-        fillingHistograms("S2",5,fEdepS2,fEdepnoiseS2);
-        fillingHistograms("BC",6,fEdepBC,fEdepnoiseBC);
-        fillingHistograms("ACOR",7,fEdepACOR,fEdepACOR);
-        fillingHistograms("UNAM",8,fEdepUNAM,fEdepUNAM);
-        fillingHistograms("FERM",9,fEdepFERM,fEdepFERM);
-        fillingHistograms("X2",10,fEdepX2,fEdepnoiseX2);
-    */
+       
+        fillingNtuples("X1",0,fEdepX1,fEdepnoiseX1);
+        fillingNtuples("Y1",1,fEdepY1,fEdepnoiseY1);
+        fillingNtuples("CZ",2,fEdepCZ,fEdepnoiseCZ);
+        fillingNtuples("S0",3,fEdepS0,fEdepnoiseS0);
+        fillingNtuples("S1",4,fEdepS1,fEdepnoiseS1);
+        fillingNtuples("S2",5,fEdepS2,fEdepnoiseS2);
+        fillingNtuples("BC",6,fEdepBC,fEdepnoiseBC);
+        fillingNtuples("ACOR",7,fEdepACOR,fEdepACOR);
+        fillingNtuples("UNAM",8,fEdepUNAM,fEdepUNAM);
+        fillingNtuples("FERM",9,fEdepFERM,fEdepFERM);
+        fillingNtuples("X2",10,fEdepX2,fEdepnoiseX2);
+    
         
     }
     //G4MUTEXUNLOCK(&mutex );
@@ -143,18 +143,23 @@ void MyEventAction::AddEdepSCBT(G4String name, G4double edep){
     }
 }
 
- void MyEventAction::fillingHistograms(G4String name, G4int scintillatorPosition, G4double fedep, G4double fedepnoise){
+ void MyEventAction::fillingNtuples(G4String name, G4int scintillatorPosition, G4double fedep, G4double fedepnoise){
     G4AnalysisManager *man=G4AnalysisManager::Instance();
-    scintillatorPosition = scintillatorPosition*10;
-    man->FillH1(scintillatorPosition, fedep);
-    man->FillH1(scintillatorPosition+10, fedepnoise);
-    G4double meanTF = man->GetH1(scintillatorPosition+6)->mean();
-    man->GetH1(scintillatorPosition+6)->reset();
-    man->FillH1(scintillatorPosition+7,meanTF);
+    //scintillatorPosition=scintillatorPosition*3;
+
+    man->FillNtupleDColumn(scintillatorPosition*3+1,0, fedep);
+    man->FillNtupleDColumn(scintillatorPosition*3+1,3, fedepnoise);
+
+    G4double meanTF = man->GetH1(scintillatorPosition*2)->mean();
+    man->GetH1(scintillatorPosition*2)->reset();
+    man->FillNtupleDColumn(scintillatorPosition*3+1,1, meanTF);
     
-    G4double meanNF = man->GetH1(scintillatorPosition+8)->mean();
-    man->GetH1(scintillatorPosition+8)->reset();
-    man->FillH1(scintillatorPosition+9,meanNF);
-    name = "Energy Deposition by "+ name+":";
+    G4double meanNF = man->GetH1(scintillatorPosition*2+1)->mean();
+    man->GetH1(scintillatorPosition*2+1)->reset();
+    man->FillNtupleDColumn(scintillatorPosition*3+1,2, meanNF);
+    man->AddNtupleRow(scintillatorPosition*3+1);
+
+    name = "Energy Deposition by "+ name+": ";
     G4cout<<name<<G4BestUnit(fedep,"Energy")<<G4endl;
+    G4cout<<name<<fedep<<G4endl;
  }

@@ -2,7 +2,7 @@
 #
 /run/initialize
 #
-/gps/particle mu-
+#/gps/particle mu-
 
 # source
 /gps/pos/type Beam

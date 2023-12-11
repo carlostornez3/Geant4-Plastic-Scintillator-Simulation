@@ -14,7 +14,7 @@ class MyPhotoDetector: public G4VSensitiveDetector{
     public:
     MyPhotoDetector(G4String);
     ~MyPhotoDetector();
-    void histogramFilling(G4String scintillatorName, G4int scintillatorPosition, G4int& evtNumber,G4int& numberOfPhotons,G4Step *aStep);
+    void NtupleFilling(G4String scintillatorName, G4int scintillatorPosition, G4int& evtNumber,G4int& numberOfPhotons,G4Step *aStep);
     
     
     private:

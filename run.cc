@@ -147,23 +147,9 @@ MyRunAction::MyRunAction(){
         //man->SetH2YAxisTitle(0,"Photon Wavelength (nm)");
         //man->SetH2ZAxisTitle(0,"Number of Photons");
    } else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"){
-       /* noc=0;
-        noc2=0;
-        G4int fevents=100;
-      
-
-        histogramCreation("X1","BC",12.,fevents,0*ns,12*ns);  
-        histogramCreation("Y1","BC",12.,fevents,0*ns,12*ns);
-        histogramCreation("CZ","EJ208",12.,fevents,0*ns,12*ns);
-        histogramCreation("S0","EJ208",12.,fevents,0*ns,12*ns);
-        histogramCreation("S1","EJ208",12.,fevents,0*ns,12*ns);
-        histogramCreation("S2","EJ208",12.,fevents,0*ns,12*ns);
-        histogramCreation("BC","BC",12.,fevents,0*ns,12*ns);
-        histogramCreation("ACORDE","EJ208",12.,fevents,0*ns,12*ns);
-        histogramCreation("UNAM","EJ208",12.,fevents,0*ns,12*ns);
-        histogramCreation("FERM","EJ208",12.,fevents,0*ns,12*ns);
-        histogramCreation("X2","BC",12.,fevents,0*ns,12*ns);*/
-
+       
+        G4AnalysisManager *man =G4AnalysisManager::Instance();
+       // man->SetNtupleMerging(true);
         NtupleCreation("X1","0",0);
         NtupleCreation("X1","1",1);
         NtupleCreation("X1","2",2);
@@ -222,8 +208,13 @@ void MyRunAction::BeginOfRunAction(const G4Run * run){
     G4int runID = run->GetRunID();
     std::stringstream strRunID;
     strRunID<<runID;
-   // G4String thickness = G4UIcommand::ConvertToString(MyDetectorConstruction::scintillatorThickness); strRunID.str()
-    G4String file =MyDetectorConstruction::scintillatorGeometry+"_"+ MyDetectorConstruction::scintillatorType +"_" + G4UIcommand::ConvertToString(MyDetectorConstruction::scintillatorThickness) + "mm"+"_"+MyDetectorConstruction::scintillatorNumberOfSensors+"Sensors"  + ".root";
+   G4String file;
+   if(MyDetectorConstruction::scintillatorArrangement=="SC"){
+        file =MyDetectorConstruction::scintillatorGeometry+"_"+ MyDetectorConstruction::scintillatorType +"_" + G4UIcommand::ConvertToString(MyDetectorConstruction::scintillatorThickness) + "mm"+"_"+MyDetectorConstruction::scintillatorNumberOfSensors+"Sensors"  + ".root";
+   }
+   if(MyDetectorConstruction::scintillatorArrangement=="SCBT" || MyDetectorConstruction::scintillatorArrangement=="RPCBT"  ){
+    file =MyDetectorConstruction::scintillatorArrangement+"_"+ MyDetectorConstruction::ParticleName +"_" + MyDetectorConstruction::ParticleEnergy + "GeV"+"_"+MyDetectorConstruction::NumberOfParticles+"Rateperspill"+ MyDetectorConstruction::NumberOfEvents + ".root";
+   }
   
     man->OpenFile(file);
 
@@ -354,13 +345,22 @@ void MyRunAction::NtupleCreation(G4String scintillatorName,G4String category,G4i
             man->CreateNtupleIColumn("fEvent"); //foton
             man->CreateNtupleDColumn("Wlength"); //foton
             man->CreateNtupleDColumn("PhotonEnergy"); //foton
+            man->CreateNtupleDColumn("TOFEvt0"); //foton
+
+           G4String name = scintillatorName + "_tof";
+            man->CreateH1(name,"Time of flight ",150,0.*ns,1000000000*ns,"ns");
+            
+            name = scintillatorName +"_fParticles";
+            man->CreateH1(name,"particles",1000,0,10000000000,"none");
+
+
             
         }
         else if(category == "1"){
-            man->CreateNtupleDColumn("Energy Deposition by Primary Particle");   //final del evento
+            man->CreateNtupleDColumn("EnergyDepositionbyPrimaryParticle");   //final del evento
             man->CreateNtupleDColumn("MTOF"); //final del evento
             man->CreateNtupleDColumn("fPhoton"); //final del evento
-            man->CreateNtupleDColumn("Energy Deposition Noise"); //final del evento
+            man->CreateNtupleDColumn("EnergyDepositionbyNoise"); //final del evento
         }
         else if(category == "2"){
             man->CreateNtupleDColumn("fXNoise"); // ruido
@@ -372,12 +372,7 @@ void MyRunAction::NtupleCreation(G4String scintillatorName,G4String category,G4i
         
         man->FinishNtuple(tupleNumber);
 
-        G4String name = scintillatorName + "TOFEvt0";
-        man->CreateH1(name, "Time of Flight Event0",150,0.*ns,120.*ns,"ns"); //foton
-        name = scintillatorName + "_tof";
-        man->CreateH1(name,"Time of flight ",150,0.*ns,1000000000*ns,"ns");
-        name = scintillatorName +"_fParticles";
-        man->CreateH1(name,"particles",1000,0,10000000000,"none");
+        
         
         
        

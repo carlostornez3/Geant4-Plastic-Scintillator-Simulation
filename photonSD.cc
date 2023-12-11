@@ -17,6 +17,7 @@ G4bool MyPhotoDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist){
     G4StepPoint *postStepPoint=aStep->GetPostStepPoint();
     G4ThreeVector posPhoton=preStepPoint->GetPosition();
     G4double posmodule, posmodule2;
+    G4Track *track=aStep->GetTrack();
 if (track) {
         const G4ParticleDefinition* particleDefinition = track->GetDefinition();
         if (particleDefinition) {
@@ -93,66 +94,66 @@ if (track) {
         }
 
             if(copyNumber == 3 || copyNumber == 4){
-                histogramFilling("X1",0,evtX1,npX1,aStep);}
-        //if(copyNumber == 2 || copyNumber == 6){G4cout<<copyNumber<<G4endl;}
+                NtupleFilling("X1",0,evtX1,npX1,aStep);}
+        
             if(copyNumber == 7 || copyNumber == 8){
-                histogramFilling("Y1",1,evtY1,npY1,aStep);
+                NtupleFilling("Y1",1,evtY1,npY1,aStep);
 
             }
 
             if(copyNumber == 11 || copyNumber == 12){
-                histogramFilling("CZ",2,evtCZ,npCZ,aStep);
+                NtupleFilling("CZ",2,evtCZ,npCZ,aStep);
             }
 
             if(copyNumber == 15 || copyNumber == 16 ){
-                histogramFilling("S0",3,evtS0,npS0,aStep);
+                NtupleFilling("S0",3,evtS0,npS0,aStep);
             
             }
 
             if(copyNumber == 19|| copyNumber == 20 ){
-                histogramFilling("S1",4,evtS1,npS1,aStep);
+                NtupleFilling("S1",4,evtS1,npS1,aStep);
             }
 
             if(copyNumber == 23 || copyNumber == 24 ){
-                histogramFilling("S2",5,evtS2,npS2,aStep);
+                NtupleFilling("S2",5,evtS2,npS2,aStep);
                 
             }
 
             if(copyNumber == 27|| copyNumber == 28){
-                histogramFilling("BC",6,evtBC,npBC,aStep);
+                NtupleFilling("BC",6,evtBC,npBC,aStep);
             }
 
             if(copyNumber == 31|| copyNumber == 32){
-                histogramFilling("ACORDE",7,evtACORDE,npACORDE,aStep);
+                NtupleFilling("ACORDE",7,evtACORDE,npACORDE,aStep);
             }
 
             if(copyNumber ==35 || copyNumber == 36){
-                histogramFilling("UNAM",8,evtUNAM,npUNAM,aStep);
+                NtupleFilling("UNAM",8,evtUNAM,npUNAM,aStep);
             }
 
             if(copyNumber == 39|| copyNumber == 40){
-                histogramFilling("FERM",9,evtFERM,npFERM,aStep);
+                NtupleFilling("FERM",9,evtFERM,npFERM,aStep);
             }
 
             if(copyNumber == 43 || copyNumber == 44){
-                histogramFilling("X2",10,evtX2,npX2,aStep);
+                NtupleFilling("X2",10,evtX2,npX2,aStep);
             }
 
-        /* histogramFilling("CZ",2,evtCZ,npCZ,aStep);
-            histogramFilling("S0",3,evtS0,npS0,aStep);
-            histogramFilling("S1",4,evtS1,npS1,aStep);
-            histogramFilling("S2",5,evtS2,npS2,aStep);
-            histogramFilling("BC",6,evtBC,npBC,aStep);
-            histogramFilling("ACORDE",7,evtACORDE,npACORDE,aStep);
-            histogramFilling("UNAM",8,evtUNAM,npUNAM,aStep);
-            histogramFilling("FERM",9,evtFERM,npFERM,aStep);
-            histogramFilling("X2",10,evtX2,npX2,aStep);*/
+        /* NtupleFilling("CZ",2,evtCZ,npCZ,aStep);
+            NtupleFilling("S0",3,evtS0,npS0,aStep);
+            NtupleFilling("S1",4,evtS1,npS1,aStep);
+            NtupleFilling("S2",5,evtS2,npS2,aStep);
+            NtupleFilling("BC",6,evtBC,npBC,aStep);
+            NtupleFilling("ACORDE",7,evtACORDE,npACORDE,aStep);
+            NtupleFilling("UNAM",8,evtUNAM,npUNAM,aStep);
+            NtupleFilling("FERM",9,evtFERM,npFERM,aStep);
+            NtupleFilling("X2",10,evtX2,npX2,aStep);*/
 
 
     }
 return true;}
 
-void MyPhotoDetector::histogramFilling(G4String scintillatorName, G4int scintillatorPosition, G4int& evtNumber, G4int& numberOfPhotons,G4Step *aStep){
+void MyPhotoDetector::NtupleFilling(G4String scintillatorName, G4int scintillatorPosition, G4int& evtNumber, G4int& numberOfPhotons,G4Step *aStep){
     G4AnalysisManager *man = G4AnalysisManager::Instance();
     
     G4Track *track=aStep->GetTrack();
@@ -162,54 +163,41 @@ void MyPhotoDetector::histogramFilling(G4String scintillatorName, G4int scintill
     const G4ParticleDefinition* particleDefinition = track->GetDefinition();
     G4String particleName = particleDefinition->GetParticleName();
 
-    G4ThreeVector pos = preStepPoint->GetPosition();
-    if(particleName != "opticalphoton"){
-        G4cout<<"Particula: "<<particleName<<" coordenadas: "<<pos<<G4endl;
-    }
+    
+    
     G4ThreeVector momPhoton=preStepPoint->GetMomentum();
     G4double energy =momPhoton.mag();
     G4double wlen= ((1.239841939*eV*um)/momPhoton.mag());
-    
-    man->FillH2(scintillatorPosition,energy, wlen);
-    G4double time = preStepPoint->GetLocalTime();
-    scintillatorPosition = scintillatorPosition*10;
-    
+    G4int idEvt =G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
+
+
+    man->FillNtupleIColumn(scintillatorPosition*3,0,idEvt);
+    man->FillNtupleDColumn(scintillatorPosition*3,1,wlen);
+    man->FillNtupleDColumn(scintillatorPosition*3,2,energy);
     
 
-    G4int idEvt =G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
+    G4double time = preStepPoint->GetLocalTime();
+ //   scintillatorPosition = scintillatorPosition*3; //3 es el numero total de histogramas
+    if(idEvt==0){
+    man->FillNtupleDColumn(scintillatorPosition*3,3,time);
+    }else{
+        man->FillNtupleDColumn(scintillatorPosition*3,3,-1);
+    }
+    man->AddNtupleRow(scintillatorPosition*3);
+    man->FillH1(scintillatorPosition*2,time);
+    
     if(idEvt==evtNumber){
         numberOfPhotons++;
         
-        man->GetH1(scintillatorPosition+8)->reset();
-        man->FillH1(scintillatorPosition+8,numberOfPhotons);
+        man->GetH1(scintillatorPosition*2+1)->reset();
+        man->FillH1(scintillatorPosition*2+1,numberOfPhotons);
     } else{
         
         evtNumber=idEvt;
         numberOfPhotons=1;
-        man->GetH1(scintillatorPosition+8)->reset();
-        man->FillH1(scintillatorPosition+8,numberOfPhotons);
+        man->GetH1(scintillatorPosition*2+1)->reset();
+        man->FillH1(scintillatorPosition*2+1,numberOfPhotons);
     }
-    
-    
-    
-    
-    
-    man->FillH1(scintillatorPosition+1,wlen);
-   // man->FillH1(1,wlen);
-    man->FillH1(scintillatorPosition+2,idEvt);
-    
-    man->FillH1(scintillatorPosition+3,energy);
-    if(idEvt<10){
-    man->FillH1(scintillatorPosition+4,idEvt);
-    }
-    
-    if(idEvt==0){
-    man->FillH1(scintillatorPosition+5,time);
-    }
-    man->FillH1(scintillatorPosition+6,time);
 
-    
-   
-    
 
-}
+    }
