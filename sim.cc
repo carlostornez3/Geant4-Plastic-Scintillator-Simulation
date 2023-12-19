@@ -97,12 +97,19 @@ int main(int argc,char** argv){
             G4String command="/control/execute ";
             G4String fileName = argv[6];
             UImanager->ApplyCommand(command+fileName);
-            command = "/gun/particle ";
-            G4String particleName = argv[5];
+
+            command = "/gps/particle ";
+            G4String particleName = argv[2];
             UImanager->ApplyCommand(command+particleName);
+
             command = "/gps/ene/mono ";
             G4String energy = argv[4];
             UImanager->ApplyCommand(command+energy+ " GeV");
+            
+            command = "/gps/number ";
+            G4String particleNumber = argv[3];
+            UImanager->ApplyCommand(command+particleNumber);
+
             command = "/run/beamOn ";
             G4String numberOfEvents = argv[5];
             UImanager->ApplyCommand(command+numberOfEvents);

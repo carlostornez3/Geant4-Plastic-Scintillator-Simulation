@@ -14,7 +14,7 @@ MyPrimaryGenerator::MyPrimaryGenerator(){
     fParticleGun->SetParticleMomentum(1.*GeV);
     fParticleGun->SetParticleDefinition(particle);
 
-    } else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"){
+    } else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"|| MyDetectorConstruction::scintillatorArrangement == "RPCBT"){
 
 
     particleSource = new G4GeneralParticleSource(); 
@@ -39,7 +39,7 @@ MyPrimaryGenerator::~MyPrimaryGenerator(){
 if(MyDetectorConstruction::scintillatorArrangement=="SC"){
     delete fParticleGun;
 }
-if(MyDetectorConstruction::scintillatorArrangement=="SCBT"){
+if(MyDetectorConstruction::scintillatorArrangement=="SCBT" || MyDetectorConstruction::scintillatorArrangement == "RPCBT"){
     delete particleSource;
 }
 }
@@ -48,7 +48,7 @@ void MyPrimaryGenerator::GeneratePrimaries(G4Event *anEvent){
     {
         fParticleGun->GeneratePrimaryVertex(anEvent);
     }
-    if(MyDetectorConstruction::scintillatorArrangement=="SCBT")
+    if(MyDetectorConstruction::scintillatorArrangement=="SCBT" || MyDetectorConstruction::scintillatorArrangement == "RPCBT")
     {
         particleSource->GeneratePrimaryVertex(anEvent);
     }

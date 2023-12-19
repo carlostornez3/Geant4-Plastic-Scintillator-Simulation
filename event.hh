@@ -28,6 +28,8 @@ G4double fnumber;
 G4int total=0,n=0,total2=0;
 
 G4double fEdepX1,fEdepY1,fEdepCZ,fEdepS0,fEdepS1,fEdepS2,fEdepBC,fEdepACOR,fEdepUNAM,fEdepFERM, fEdepX2;
+G4double fEdepEJ1,fEdepEJ2,fEdepEJ3,fEdepEJ4,fEdepEJ5,fEdepEJ6,fEdepEJ7,fEdepEJ8,fEdepHEX, fEdepTR,fEdepDUMP;
+G4double fEdepnoiseEJ1,fEdepnoiseEJ2,fEdepnoiseEJ3,fEdepnoiseEJ4,fEdepnoiseEJ5,fEdepnoiseEJ6,fEdepnoiseEJ7,fEdepnoiseEJ8,fEdepnoiseHEX, fEdepnoiseTR,fEdepnoiseDUMP;
 G4double fEdepnoiseX1,fEdepnoiseY1,fEdepnoiseCZ,fEdepnoiseS0,fEdepnoiseS1,fEdepnoiseS2,fEdepnoiseBC,fEdepnoiseACOR,fEdepnoiseUNAM,fEdepnoiseFERM, fEdepnoiseX2;
 };
 

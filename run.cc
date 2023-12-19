@@ -146,10 +146,10 @@ MyRunAction::MyRunAction(){
         //man->SetH2XAxisTitle(0,"Photon Energy (eV)");
         //man->SetH2YAxisTitle(0,"Photon Wavelength (nm)");
         //man->SetH2ZAxisTitle(0,"Number of Photons");
-   } else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"){
+   } else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"|| MyDetectorConstruction::scintillatorArrangement == "RPCBT"){
        
         G4AnalysisManager *man =G4AnalysisManager::Instance();
-       // man->SetNtupleMerging(true);
+        man->SetNtupleMerging(true);
         NtupleCreation("X1","0",0);
         NtupleCreation("X1","1",1);
         NtupleCreation("X1","2",2);
@@ -193,6 +193,48 @@ MyRunAction::MyRunAction(){
         NtupleCreation("X2","0",30);
         NtupleCreation("X2","1",31);
         NtupleCreation("X2","2",32);
+
+        NtupleCreation("EJ1","0",33);
+        NtupleCreation("EJ1","1",34);
+        NtupleCreation("EJ1","2",35);
+
+        NtupleCreation("EJ2","0",36);
+        NtupleCreation("EJ2","1",37);
+        NtupleCreation("EJ2","2",38);
+
+        NtupleCreation("EJ3","0",39);
+        NtupleCreation("EJ3","1",40);
+        NtupleCreation("EJ3","2",41);
+
+        NtupleCreation("EJ4","0",42);
+        NtupleCreation("EJ4","1",43);
+        NtupleCreation("EJ4","2",44);
+
+        NtupleCreation("EJ5","0",45);
+        NtupleCreation("EJ5","1",46);
+        NtupleCreation("EJ5","2",47);
+
+        NtupleCreation("EJ6","0",48);
+        NtupleCreation("EJ6","1",49);
+        NtupleCreation("EJ6","2",50);
+
+        NtupleCreation("EJ7","0",51);
+        NtupleCreation("EJ7","1",52);
+        NtupleCreation("EJ7","2",53);
+
+        NtupleCreation("EJ8","0",54);
+        NtupleCreation("EJ8","1",55);
+        NtupleCreation("EJ8","2",56);
+
+        NtupleCreation("TR","0",57);
+        NtupleCreation("TR","1",58);
+        NtupleCreation("TR","2",59);
+
+        NtupleCreation("HEX","0",60);
+        NtupleCreation("HEX","1",61);
+        NtupleCreation("HEX","2",62);
+
+
 
 
 

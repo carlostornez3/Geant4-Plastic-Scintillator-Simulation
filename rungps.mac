@@ -1,6 +1,6 @@
 
 ##This macro must be used only while using G4MULTITHREADED##
-/run/numberOfThreads 1
+/run/numberOfThreads 5
 /run/initialize
 /control/execute gps.mac
 /process/optical/scintillation/setFiniteRiseTime true

@@ -37,8 +37,8 @@ public:
     void ScintillatorProperties(G4String type,G4String geometry,G4int thickness, G4String numberOfSensors, G4String arrangement);
     void BeamTestConfiguration(G4String arrangement, G4String particleName, G4String numberOfParticles, G4String particleEnergy, G4String numberOfEvents);
 
-
-
+    void CreateRPC(G4double length, G4double width, G4double thickness,G4double Xcoordinate, G4double Ycoordinate, G4double Zcoordinate,G4Material* gasMaterial ,G4Material *firstLayerMaterial, G4Material *secondLayerMaterial,  G4String nombre);
+        
 
     virtual G4VPhysicalVolume *Construct();
     static G4String scintillatorType;
@@ -56,7 +56,7 @@ public:
     G4double wavelength, lightOutput;
     void hexagonalGeometry();
     void rectangularGeometry();
-    G4SubtractionSolid * CreateRectangularShell(G4double length, G4double width, G4double thickness, G4double shellThickness);
+   // void CreateRectangularShell(G4SubtractionSolid *shell,G4double length, G4double width, G4double thickness, G4double shellThickness);
 private: 
     G4LogicalVolume *logicDetector;
    
@@ -79,6 +79,9 @@ private:
         G4LogicalVolume *logicDetectorAcorde;
         G4LogicalVolume *logicDetectorUnamEJ;
         G4LogicalVolume *logicDetectorX2;
+        G4LogicalVolume *logicDetectorEJ1,*logicDetectorEJ2,*logicDetectorEJ3,*logicDetectorEJ4,*logicDetectorEJ5,*logicDetectorEJ6,*logicDetectorEJ7,*logicDetectorEJ8;
+        G4LogicalVolume *logicDetectorHex,*logicDetectorTR,*logicDetectorDUMP;
+        G4LogicalVolume *logicPhotoSensorUpHex, *logicPhotoSensorDownHex;
     virtual void ConstructSDandField();
     
     
@@ -94,6 +97,9 @@ private:
     G4RotationMatrix* yRot = new G4RotationMatrix;
 
     G4Material *worldMat,*SCMat, *mylarMat,*air,*BCMat, *EJMat;
+    G4Material *aluminium;
+    G4Material* Freon;
+    G4Material *copper;
     G4OpticalSurface *mirrorSurface;
     void DefineMaterialsBC();
     void DefineMaterialsEJ(); 

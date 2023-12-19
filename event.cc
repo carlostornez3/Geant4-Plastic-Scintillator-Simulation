@@ -10,7 +10,8 @@ fEdep=0;
 fnumber=0;
 fEdepX1=0, fEdepY1=0, fEdepCZ=0, fEdepS0=0, fEdepS1=0, fEdepS2=0,fEdepBC=0, fEdepUNAM=0, fEdepACOR=0,fEdepFERM=0, fEdepX2=0;
 fEdepnoiseX1=0, fEdepnoiseY1=0, fEdepnoiseCZ=0, fEdepnoiseS0=0, fEdepnoiseS1=0, fEdepnoiseS2=0,fEdepnoiseBC=0, fEdepnoiseUNAM=0, fEdepnoiseACOR=0,fEdepnoiseFERM=0, fEdepnoiseX2=0;
-
+fEdepnoiseEJ1=0,fEdepnoiseEJ2=0,fEdepnoiseEJ3=0,fEdepnoiseEJ4=0,fEdepnoiseEJ5=0,fEdepnoiseEJ6=0,fEdepnoiseEJ7=0,fEdepnoiseEJ8=0,fEdepnoiseHEX=0, fEdepnoiseTR=0,fEdepnoiseDUMP=0;
+fEdepEJ1=0,fEdepEJ2=0,fEdepEJ3=0,fEdepEJ4=0,fEdepEJ5=0,fEdepEJ6=0,fEdepEJ7=0,fEdepEJ8=0,fEdepHEX=0,fEdepTR=0,fEdepDUMP=0;
 }
 void MyEventAction::EndOfEventAction(const G4Event*){
 
@@ -45,7 +46,7 @@ void MyEventAction::EndOfEventAction(const G4Event*){
         
         
         G4cout<<"Number of Photons: "<<meanNF<<G4endl;
-    }else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"){
+    }else if(MyDetectorConstruction::scintillatorArrangement=="SCBT"|| MyDetectorConstruction::scintillatorArrangement == "RPCBT"){
         G4AnalysisManager *man=G4AnalysisManager::Instance();
         G4int evt =G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
         G4cout<<"Evento: "<< evt<< G4endl;
@@ -61,7 +62,18 @@ void MyEventAction::EndOfEventAction(const G4Event*){
         fillingNtuples("UNAM",8,fEdepUNAM,fEdepUNAM);
         fillingNtuples("FERM",9,fEdepFERM,fEdepFERM);
         fillingNtuples("X2",10,fEdepX2,fEdepnoiseX2);
-    
+        fillingNtuples("EJ1",11,fEdepEJ1,fEdepnoiseEJ1);
+        fillingNtuples("EJ2",12,fEdepEJ2,fEdepnoiseEJ2);
+        fillingNtuples("EJ3",13,fEdepEJ3,fEdepnoiseEJ3);
+        fillingNtuples("EJ4",14,fEdepEJ4,fEdepnoiseEJ4);
+        fillingNtuples("EJ5",15,fEdepEJ5,fEdepnoiseEJ5);
+        fillingNtuples("EJ6",16,fEdepEJ6,fEdepnoiseEJ6);
+        fillingNtuples("EJ7",17,fEdepEJ7,fEdepnoiseEJ7);
+        fillingNtuples("EJ8",18,fEdepEJ8,fEdepnoiseEJ8);
+        fillingNtuples("TR",19,fEdepTR,fEdepnoiseTR);
+        fillingNtuples("HEX",20,fEdepHEX,fEdepnoiseHEX); ///CAREFUL HERE, SCINTILLATORS WERE NOT CREATED IN ORDER. IF YOU WANT TO DOBLE CHECK, EXECUTE THE SIMULATION, AT THE BEGGINNIG ALL COPYNUMBERS WILL BE DISPLAY
+        
+
         
     }
     //G4MUTEXUNLOCK(&mutex );
@@ -107,6 +119,42 @@ void MyEventAction::AddEdepSCBT(G4String name, G4double edep){
         fEdepX2 +=edep;
     }
 
+    if(name == "EJ1"){
+        fEdepEJ1 +=edep;
+    }
+    if(name == "EJ2"){
+        fEdepEJ2 +=edep;
+    }
+    if(name == "EJ3"){
+        fEdepEJ3 +=edep;
+    }
+    if(name == "EJ4"){
+        fEdepEJ4 +=edep;
+    }
+    if(name == "EJ5"){
+        fEdepEJ5 +=edep;
+    }
+    if(name == "EJ6"){
+        fEdepEJ6 +=edep;
+    }
+    if(name == "EJ7"){
+        fEdepEJ7 +=edep;
+    }
+    if(name == "EJ8"){
+        fEdepEJ8 +=edep;
+    }
+    if(name == "TR"){
+        fEdepTR +=edep;
+    }
+    if(name == "HEX"){
+        fEdepHEX +=edep;
+    }
+    
+    
+
+
+
+/////////////
 
    if(name == "noiseX1"){
         fEdepnoiseX1 +=edep;
@@ -141,12 +189,54 @@ void MyEventAction::AddEdepSCBT(G4String name, G4double edep){
     if(name == "noiseX2"){
         fEdepnoiseX2 +=edep;
     }
+
+     if(name == "noiseEJ1"){
+        fEdepnoiseEJ1 +=edep;
+    }
+     if(name == "noiseEJ2"){
+        fEdepnoiseEJ2 +=edep;
+    }
+
+     if(name == "noiseEJ3"){
+        fEdepnoiseEJ3 +=edep;
+    }
+
+     if(name == "noiseEJ4"){
+        fEdepnoiseEJ4 +=edep;
+    }
+
+     if(name == "noiseEJ5"){
+        fEdepnoiseEJ5 +=edep;
+    }
+
+     if(name == "noiseEJ6"){
+        fEdepnoiseEJ6 +=edep;
+    }
+
+     if(name == "noiseEJ7"){
+        fEdepnoiseEJ7 +=edep;
+    }
+
+     if(name == "noiseEJ8"){
+        fEdepnoiseEJ8 +=edep;
+    }
+
+     if(name == "noiseHEX"){
+        fEdepnoiseHEX +=edep;
+    }
+
+     if(name == "noiseTR"){
+        fEdepnoiseTR +=edep;
+    }
+
+     
 }
 
  void MyEventAction::fillingNtuples(G4String name, G4int scintillatorPosition, G4double fedep, G4double fedepnoise){
     G4AnalysisManager *man=G4AnalysisManager::Instance();
     //scintillatorPosition=scintillatorPosition*3;
-
+    fedep = fedep/MeV;
+    fedepnoise = fedepnoise/MeV;
     man->FillNtupleDColumn(scintillatorPosition*3+1,0, fedep);
     man->FillNtupleDColumn(scintillatorPosition*3+1,3, fedepnoise);
 
@@ -159,7 +249,8 @@ void MyEventAction::AddEdepSCBT(G4String name, G4double edep){
     man->FillNtupleDColumn(scintillatorPosition*3+1,2, meanNF);
     man->AddNtupleRow(scintillatorPosition*3+1);
 
-    name = "Energy Deposition by "+ name+": ";
+    name = "Energy Deposition  "+ name+": ";
     G4cout<<name<<G4BestUnit(fedep,"Energy")<<G4endl;
-    G4cout<<name<<fedep<<G4endl;
+    G4cout<<name<<G4BestUnit(fedepnoise,"Energy")<<G4endl;
+   
  }
