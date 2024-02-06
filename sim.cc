@@ -16,9 +16,17 @@
 #include "G4VModularPhysicsList.hh"
 #include "G4EmStandardPhysics.hh"
 #include "G4OpticalPhysics.hh"
+//#include "G4Random.hh"
+#include <ctime>
+
 
 
 int main(int argc,char** argv){
+
+    G4long seed = static_cast<G4long>(time(0));
+
+    // Establecer la semilla aleatoria
+    G4Random::setTheSeed(seed);
     G4UIExecutive *ui=nullptr;
     
     #ifdef G4MULTITHREADED
