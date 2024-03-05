@@ -5,7 +5,7 @@
 
  //Creation of histograms
  //#include "G4RootAnalysisManager.hh"
- G4int MyRunAction::noc;
+G4int MyRunAction::noc;
 G4int MyRunAction::noc2;
 
 MyRunAction::MyRunAction(){
@@ -150,6 +150,7 @@ MyRunAction::MyRunAction(){
        
         G4AnalysisManager *man =G4AnalysisManager::Instance();
         man->SetNtupleMerging(true);
+        man->SetActivation(true);
         NtupleCreation("X1","0",0);
         NtupleCreation("X1","1",1);
         NtupleCreation("X1","2",2);
@@ -233,7 +234,19 @@ MyRunAction::MyRunAction(){
         NtupleCreation("HEX","0",60);
         NtupleCreation("HEX","1",61);
         NtupleCreation("HEX","2",62);
+        man->CreateNtuple("SecondariesInformation","SecondariesInformation");
+        man->CreateNtupleIColumn("EventId");
+        man->CreateNtupleIColumn("ParticleId");
+        man->CreateNtupleDColumn("fX");
+        man->CreateNtupleDColumn("fY");
+        man->CreateNtupleDColumn("fZ");  
+        man->CreateNtupleDColumn("fEnergy");
+        man->CreateNtupleSColumn("ParticleName");  
+        man->FinishNtuple(63);
 
+    
+
+        
 
 
 
@@ -255,7 +268,7 @@ void MyRunAction::BeginOfRunAction(const G4Run * run){
         file =MyDetectorConstruction::scintillatorGeometry+"_"+ MyDetectorConstruction::scintillatorType +"_" + G4UIcommand::ConvertToString(MyDetectorConstruction::scintillatorThickness) + "mm"+"_"+MyDetectorConstruction::scintillatorNumberOfSensors+"Sensors"  + ".root";
    }
    if(MyDetectorConstruction::scintillatorArrangement=="SCBT" || MyDetectorConstruction::scintillatorArrangement=="RPCBT"  ){
-    file =MyDetectorConstruction::scintillatorArrangement+"_"+ MyDetectorConstruction::ParticleName +"_" + MyDetectorConstruction::ParticleEnergy + "GeV"+"_"+MyDetectorConstruction::NumberOfParticles+"Rateperspill"+ MyDetectorConstruction::NumberOfEvents + ".root";
+    file =MyDetectorConstruction::scintillatorArrangement+"_"+ MyDetectorConstruction::ParticleName +"_" + MyDetectorConstruction::ParticleEnergy + "GeV"+"_"+MyDetectorConstruction::NumberOfParticles+"Rateperspill_Events"+ MyDetectorConstruction::NumberOfEvents + ".root";
    }
   
     man->OpenFile(file);
@@ -264,7 +277,15 @@ void MyRunAction::BeginOfRunAction(const G4Run * run){
 }
 void MyRunAction::EndOfRunAction(const G4Run *){
     G4AnalysisManager *man =G4AnalysisManager::Instance();
+
+    
+
     man->Write();
+
+    for(G4int i=0;i<42;i++){
+        man->SetH1Activation(i, false);
+    }
+
     man->CloseFile();
 }
 
@@ -384,10 +405,10 @@ void MyRunAction::NtupleCreation(G4String scintillatorName,G4String category,G4i
 
         if(category == "0"){
 
-            man->CreateNtupleIColumn("fEvent"); //foton
+            man->CreateNtupleIColumn("Event"); //foton
             man->CreateNtupleDColumn("Wlength"); //foton
             man->CreateNtupleDColumn("PhotonEnergy"); //foton
-            man->CreateNtupleDColumn("TOFEvt0"); //foton
+            man->CreateNtupleDColumn("TOFEvt"); //foton
 
            G4String name = scintillatorName + "_tof";
             man->CreateH1(name,"Time of flight ",150,0.*ns,1000000000*ns,"ns");
@@ -403,12 +424,17 @@ void MyRunAction::NtupleCreation(G4String scintillatorName,G4String category,G4i
             man->CreateNtupleDColumn("MTOF"); //final del evento
             man->CreateNtupleDColumn("fPhoton"); //final del evento
             man->CreateNtupleDColumn("EnergyDepositionbyNoise"); //final del evento
+            man->CreateNtupleIColumn("EventId");
         }
         else if(category == "2"){
             man->CreateNtupleDColumn("fXNoise"); // ruido
             man->CreateNtupleDColumn("fYNoise"); //ruido
             man->CreateNtupleDColumn("fZNoise"); //ruido
-
+            man->CreateNtupleIColumn("EventId");
+            man->CreateNtupleIColumn("ParticleId");
+            man->CreateNtupleDColumn("LocalTime");
+            
+        
 
         }
         

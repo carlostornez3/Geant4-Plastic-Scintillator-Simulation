@@ -8,6 +8,7 @@
 #include "stepping.hh"
 #include "PrimaryGeneratorAction.hh"
 #include "construction.hh"
+#include "trajectory.hh"
 class MyActionInitialization : public G4VUserActionInitialization{
     public:
     MyActionInitialization();

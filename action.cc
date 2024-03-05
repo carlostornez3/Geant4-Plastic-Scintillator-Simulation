@@ -20,7 +20,12 @@ void MyActionInitialization::Build() const
     SetUserAction(runAction);
     MyEventAction *eventAction= new MyEventAction(runAction);
     SetUserAction(eventAction);
+
+    MyTrackingAction *trackingAction = new MyTrackingAction();
+    SetUserAction(trackingAction);
+
     MySteppingAction *steppingAction= new MySteppingAction(eventAction);
     SetUserAction(steppingAction);
+    
     
 }

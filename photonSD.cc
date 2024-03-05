@@ -215,11 +215,7 @@ void MyPhotoDetector::NtupleFilling(G4String scintillatorName, G4int scintillato
     G4double time = preStepPoint->GetLocalTime();
     time = time/ns;
  //   scintillatorPosition = scintillatorPosition*3; //3 es el numero total de histogramas
-    if(idEvt==0){
     man->FillNtupleDColumn(scintillatorPosition*3,3,time);
-    }else{
-        man->FillNtupleDColumn(scintillatorPosition*3,3,-1);
-    }
     man->AddNtupleRow(scintillatorPosition*3);
     man->FillH1(scintillatorPosition*2,time);
     

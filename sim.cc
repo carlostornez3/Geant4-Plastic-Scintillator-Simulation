@@ -27,6 +27,7 @@ int main(int argc,char** argv){
 
     // Establecer la semilla aleatoria
     G4Random::setTheSeed(seed);
+    G4cout<<"The seed is: "<< seed<<G4endl;
     G4UIExecutive *ui=nullptr;
     
     #ifdef G4MULTITHREADED
@@ -35,8 +36,6 @@ int main(int argc,char** argv){
         G4RunManager *runManager=new G4RunManager();
     #endif
     MyDetectorConstruction scintillatorProperties;
-    G4bool is = (G4String(argv[1])=="SCBT");
-    G4cout<<is<<G4endl;
     if(G4String(argv[1])=="SC"){
         G4int thickness = G4UIcommand::ConvertToInt(argv[4]);
         scintillatorProperties.ScintillatorProperties(argv[2],argv[3],thickness,argv[5],argv[1]); 
@@ -73,7 +72,6 @@ int main(int argc,char** argv){
 
         delete visManager;
     }else if(G4String(argv[1])=="SCBT" || G4String(argv[1])=="RPCBT"){
-        G4cout<<"aquí"<<G4endl;
         G4int particleEnergy = G4UIcommand::ConvertToInt(argv[4]);
         G4int numberOfParticles = G4UIcommand::ConvertToInt(argv[3]);
         scintillatorProperties.BeamTestConfiguration(argv[1],argv[2],argv[3],argv[4],argv[5]); 
@@ -85,7 +83,7 @@ int main(int argc,char** argv){
         G4VModularPhysicsList * physics = new QGSP_BERT();
         //physics->RegisterPhysics(new G4DecayPhysics());
         //physics->RegisterPhysics(new G4EmStandardPhysics());
-        physics->RegisterPhysics(new G4OpticalPhysics());
+       // physics->RegisterPhysics(new G4OpticalPhysics());
         runManager->SetUserInitialization(physics);
     
         if(argc==6){
@@ -121,7 +119,7 @@ int main(int argc,char** argv){
             command = "/run/beamOn ";
             G4String numberOfEvents = argv[5];
             UImanager->ApplyCommand(command+numberOfEvents);
-            delete ui;
+          //  delete ui;
         }
         delete visManager;
 

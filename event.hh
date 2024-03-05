@@ -10,6 +10,10 @@
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 #include "construction.hh"
+#include "G4TrajectoryContainer.hh"
+#include "G4VTrajectory.hh"
+#include "G4VTrajectoryPoint.hh"
+#include "G4ParticleDefinition.hh"
 class MyEventAction:public G4UserEventAction{
 public:
 MyEventAction(MyRunAction*);
@@ -21,7 +25,7 @@ G4Mutex mutex;
     void AddEdep(G4double edep){fEdep +=edep;}
     void AddNumber(){fnumber++;}
     void AddEdepSCBT(G4String name, G4double edep);
-    void fillingNtuples(G4String name, G4int scintillatorPosition, G4double fedep, G4double fedepnoise);
+    void fillingNtuples(G4String name, G4int scintillatorPosition, G4double fedep, G4double fedepnoise,const G4Event* event);
 private:
 G4double fEdep,meanTF,meanNF,hola;
 G4double fnumber;
@@ -33,5 +37,5 @@ G4double fEdepnoiseEJ1,fEdepnoiseEJ2,fEdepnoiseEJ3,fEdepnoiseEJ4,fEdepnoiseEJ5,f
 G4double fEdepnoiseX1,fEdepnoiseY1,fEdepnoiseCZ,fEdepnoiseS0,fEdepnoiseS1,fEdepnoiseS2,fEdepnoiseBC,fEdepnoiseACOR,fEdepnoiseUNAM,fEdepnoiseFERM, fEdepnoiseX2;
 };
 
-
+void getSecondariesInfo(const G4Event* event);
 #endif
