@@ -83,7 +83,7 @@ int main(int argc,char** argv){
         G4VModularPhysicsList * physics = new QGSP_BERT();
         //physics->RegisterPhysics(new G4DecayPhysics());
         //physics->RegisterPhysics(new G4EmStandardPhysics());
-       // physics->RegisterPhysics(new G4OpticalPhysics());
+       //physics->RegisterPhysics(new G4OpticalPhysics());
         runManager->SetUserInitialization(physics);
     
         if(argc==6){
@@ -99,6 +99,7 @@ int main(int argc,char** argv){
         UImanager->ApplyCommand("/control/execute vis.mac");
         UImanager->ApplyCommand("/control/execute gps.mac");
         ui->SessionStart();
+        delete ui;
         }else{
             G4String command="/control/execute ";
             G4String fileName = argv[6];
