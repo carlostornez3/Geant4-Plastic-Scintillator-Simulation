@@ -250,7 +250,7 @@ G4bool MyBarDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist){
         }
 
 
-        if(copyNumber == 1086){ //HEX
+        if(copyNumber == 1080){ //HEX
         man->FillNtupleDColumn(62,0,pos.x()/mm);
         man->FillNtupleDColumn(62,1,pos.y()/mm);
         man->FillNtupleDColumn(62,2,pos.z()/mm);

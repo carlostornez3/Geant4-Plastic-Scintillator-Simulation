@@ -42,7 +42,6 @@ void MySteppingAction::UserSteppingAction(const G4Step *step){
             
             if(parentID==0){
                 fEventAction->AddEdepSCBT("X1",edep);
-                if(particleName == "opticalphoton"){G4cout<<particleName<<G4endl;}
             }else if(particleName != "opticalphoton") {
                 fEventAction->AddEdepSCBT("noiseX1",edep);
                 //G4cout<<particleName<< " "<<copyNumber<<G4endl;

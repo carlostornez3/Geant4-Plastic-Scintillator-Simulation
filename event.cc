@@ -72,7 +72,7 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
         fillingNtuples("EJ8",18,fEdepEJ8,fEdepnoiseEJ8,event);
         fillingNtuples("TR",19,fEdepTR,fEdepnoiseTR,event);
         fillingNtuples("HEX",20,fEdepHEX,fEdepnoiseHEX,event); ///CAREFUL HERE, SCINTILLATORS WERE NOT CREATED IN ORDER. IF YOU WANT TO DOBLECHECK, EXECUTE THE SIMULATION, AT THE BEGGINNIG ALL COPYNUMBERS WILL BE DISPLAY
-
+        getSecondariesInfo(event);
         
     }
     //G4MUTEXUNLOCK(&mutex );
@@ -266,7 +266,7 @@ void MyEventAction::AddEdepSCBT(G4String name, G4double edep){
 
     for (int i = 0; i < trajectoryContainer->entries(); ++i) {
         G4VTrajectory* trajectory = static_cast<G4VTrajectory*>((*trajectoryContainer)[i]);
-
+       // G4cout<<trajectory->GetParticleName()<<"ID: "<<trajectory->GetParentID()<<G4endl;
         // Verificar si la trayectoria es secundaria
         if (trajectory->GetParentID() != 0) {
             G4VTrajectoryPoint* vertex = trajectory->GetPoint(0);

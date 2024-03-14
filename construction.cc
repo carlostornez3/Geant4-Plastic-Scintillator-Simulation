@@ -169,6 +169,7 @@ void MyDetectorConstruction::DefineAllScintillatorsMaterial(){
    
     std::ifstream BCin("bc404.txt");
     std::ifstream EJin("ej208.txt");
+    std::ifstream wave("wave.txt");
 
 
     
@@ -195,7 +196,6 @@ void MyDetectorConstruction::DefineAllScintillatorsMaterial(){
         lightOutput= lightOutput/100;
         energyEJ.push_back(Energy);
         fractionEJ.push_back(lightOutput);
-        globalEnergy.push_back(Energy);
     }
     G4int numberOfEntriesEJ=energyEJ.size();
     
@@ -212,11 +212,11 @@ void MyDetectorConstruction::DefineAllScintillatorsMaterial(){
         G4double Energy=1.239841939*eV/((wavelength/1000));
         lightOutput= lightOutput/100;
         energyBC.push_back(Energy);
-        globalEnergy.push_back(Energy);
+        
         fractionBC.push_back(lightOutput);
     }
     G4int numberOfEntriesBC=energyBC.size();
-    G4int globalNumberOfEntries=globalEnergy.size();
+    
 
      contador = 0;
     while(contador<numberOfEntriesBC){
@@ -224,6 +224,12 @@ void MyDetectorConstruction::DefineAllScintillatorsMaterial(){
         absBC.push_back(AbsBC);
         contador++;
     }
+    while(!wave.eof()){
+        wave>>wavelength;
+        G4double Energy = 1.239841939*eV/((wavelength/1000));
+        globalEnergy.push_back(Energy);
+    }
+    G4int globalNumberOfEntries=globalEnergy.size();
     //G4int globalNumberOfEntries=globalEnergy.size();
 
     contador = 0;
@@ -233,7 +239,7 @@ void MyDetectorConstruction::DefineAllScintillatorsMaterial(){
         reflectivity.push_back(Reflectivity);
         contador++;
     }
-    std::sort(globalEnergy.begin(), globalEnergy.end());
+    
     G4OpticalParameters::Instance()->SetScintFiniteRiseTime(true);
     G4NistManager *nist = G4NistManager::Instance();
 
@@ -578,10 +584,10 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
         G4SubtractionSolid* externalLayer=new G4SubtractionSolid("external-sensor", xtrulayer, xtruExternal);
         G4SubtractionSolid *airLayerSolid=new G4SubtractionSolid("external-sensor", externalLayer, sensorBox);
         logicDetectorHex =new G4LogicalVolume(airLayerSolid,worldMat,"logicalHex");
-        G4VPhysicalVolume *physAirHex=new G4PVPlacement(0,G4ThreeVector(0.,0.,zcoordinate),logicDetectorHex,"physDetector",logicWorld,false,copyNumberSC+6,true);/////////////
+        G4VPhysicalVolume *physAirHex=new G4PVPlacement(0,G4ThreeVector(0.,0.,zcoordinate),logicDetectorHex,"physDetector",logicWorld,false,copyNumberSC+1000,true);/////////////
 
 
-        G4cout<<"Hex: "<< "UpperDetector: "<<copyNumberSC+4<<" LowerDetector"<<copyNumberSC+5<<" PhysicalVolume: "<<copyNumberSC+2<<" airLayer: "<<copyNumberSC+6<<G4endl;
+        G4cout<<"Hex: "<< "LowerDetector: "<<copyNumberSC+4<<" UpperDetector: "<<copyNumberSC+5<<"PhysicalVolume: "<<copyNumberSC+2<<"airLayer: "<<copyNumberSC+1000<<G4endl;
 
 
          
@@ -831,15 +837,16 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
 
 
         
-        G4double zcoordinate = 401.15*cm;
+        //G4double zcoordinate = 401.15*cm;
+        G4double zcoordinate = 40.15*cm;
         thickness = 2.1*cm;
         
         xtru = new G4ExtrudedSolid("xtru", polygon, thickness/2, offsetA, scaleA, offsetB, scaleB);
         G4ExtrudedSolid* xtrulayer = new G4ExtrudedSolid("xtrulayer", polygonExtlayer, (thickness/2)+1*mm+airDetectorLayerThickness, offsetA, scaleA, offsetB, scaleB);
 
 
-        logicSC= new G4LogicalVolume(xtru,BCMat, "logicSC");
-        physSC =new G4PVPlacement(0,G4ThreeVector(0.,0.,zcoordinate),logicSC,"physSC",logicWorld,false,copyNumberSC+2,true); ////////////////
+        G4LogicalVolume* logicHEX= new G4LogicalVolume(xtru,BCMat, "logicHex");
+        G4VPhysicalVolume* physHEX =new G4PVPlacement(0,G4ThreeVector(0.,0.,zcoordinate),logicHEX,"physSC",logicWorld,false,copyNumberSC+2,true); ////////////////
         
         xtruExternal= new G4ExtrudedSolid("xtruExternal", polygonExt, (thickness/2)+1*mm, offsetA, scaleA, offsetB, scaleB);
     
@@ -857,10 +864,10 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
         G4SubtractionSolid* externalLayer=new G4SubtractionSolid("external-sensor", xtrulayer, xtruExternal);
         G4SubtractionSolid *airLayerSolid=new G4SubtractionSolid("external-sensor", externalLayer, sensorBox);
         logicDetectorHex =new G4LogicalVolume(airLayerSolid,worldMat,"logicalHex");
-        G4VPhysicalVolume *physAirHex=new G4PVPlacement(0,G4ThreeVector(0.,0.,zcoordinate),logicDetectorHex,"physDetector",logicWorld,false,copyNumberSC+6,true);/////////////
+        G4VPhysicalVolume *physAirHex=new G4PVPlacement(0,G4ThreeVector(0.,0.,zcoordinate),logicDetectorHex,"physDetector",logicWorld,false,copyNumberSC+1000,true);/////////////
 
 
-        G4cout<<"Hex: "<< "UpperDetector: "<<copyNumberSC+4<<"UpperDetector"<<copyNumberSC+5<<"PhysicalVolume: "<<copyNumberSC+2<<"airLayer: "<<copyNumberSC+6<<G4endl;
+        G4cout<<"Hex: "<< "LowerDetector: "<<copyNumberSC+4<<" UpperDetector: "<<copyNumberSC+5<<"PhysicalVolume: "<<copyNumberSC+2<<"airLayer: "<<copyNumberSC+1000<<G4endl;
 
 
          copyNumberSC=87;

@@ -282,10 +282,6 @@ void MyRunAction::EndOfRunAction(const G4Run *){
 
     man->Write();
 
-    for(G4int i=0;i<42;i++){
-        man->SetH1Activation(i, false);
-    }
-
     man->CloseFile();
 }
 

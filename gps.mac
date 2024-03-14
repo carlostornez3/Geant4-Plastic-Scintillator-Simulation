@@ -1,8 +1,7 @@
 # test30 : 1D accelerator beam
 #
 /run/initialize
-#
-#/gps/particle mu-
+
 
 # source
 /gps/pos/type Beam
