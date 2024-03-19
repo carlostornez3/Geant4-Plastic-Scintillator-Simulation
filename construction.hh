@@ -97,6 +97,7 @@ private:
     G4RotationMatrix* yRot = new G4RotationMatrix;
 
     G4Material *worldMat,*SCMat, *mylarMat,*air,*BCMat, *EJMat;
+    G4Material *poly;
     G4Material *aluminium;
     G4Material* Freon;
     G4Material *copper;
