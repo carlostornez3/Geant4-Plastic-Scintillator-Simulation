@@ -407,10 +407,10 @@ void MyRunAction::NtupleCreation(G4String scintillatorName,G4String category,G4i
             man->CreateNtupleDColumn("TOFEvt"); //foton
 
            G4String name = scintillatorName + "_tof";
-            man->CreateH1(name,"Time of flight ",150,0.*ns,1000000000*ns,"ns");
+            man->CreateH1(name,"Time of flight ",150,0.*ns,1000000000000*ns,"ns");
             
             name = scintillatorName +"_fParticles";
-            man->CreateH1(name,"particles",1000,0,10000000000,"none");
+            man->CreateH1(name,"particles",1000,0,100000000000000000,"none");
 
 
             

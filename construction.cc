@@ -304,7 +304,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
    
     //World volume is created
 
-    G4double xWorld = 1.*m, yWorld= 1.*m, zWorld = 8.5*m;
+    G4double xWorld = 1.5*m, yWorld= 1.5*m, zWorld = 8.5*m;
     thickness=scintillatorThickness*mm;
     solidWorld= new G4Box("solidWorld",xWorld,yWorld,zWorld);
     logicWorld = new G4LogicalVolume(solidWorld,worldMat, "logicWorld");

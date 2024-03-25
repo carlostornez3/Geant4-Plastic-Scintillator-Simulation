@@ -248,7 +248,7 @@ void MyEventAction::AddEdepSCBT(G4String name, G4double edep){
     man->GetH1(scintillatorPosition*2+1)->reset();
     man->FillNtupleDColumn(scintillatorPosition*3+1,2, meanNF);
 
-    man->FillNtupleIColumn(scintillatorPosition*3+1,4, meanNF);
+    man->FillNtupleIColumn(scintillatorPosition*3+1,4, eventId);
     man->AddNtupleRow(scintillatorPosition*3+1);
 
     name = "Energy Deposition  "+ name;
